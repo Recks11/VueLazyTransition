@@ -30,7 +30,6 @@
   },
   "dependencies": {
     "core-js": "^3.6.4",
-    "vue": "^2.6.11",
     "vue-property-decorator": "^8.4.1"
   },
   "devDependencies": {
@@ -53,6 +52,9 @@
     "eslint-plugin-vue": "^6.2.2",
     "typescript": "~3.8.3",
     "vue-template-compiler": "^2.6.11"
+  },
+  "peerDependencies":{
+    "vue": "^2.6.11"
   },
   "keywords": [
     "animate",
