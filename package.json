@@ -2,11 +2,36 @@
   "name": "vue-lazy-animation",
   "version": "0.1.0",
   "private": true,
+  
+  "main": "dist/vue-lazy-animation.umd.min.js",
+  
+  "unpkg": "dist/vue-lazy-animation.umd.min.js",
+  "jsdelivr": "dist/vue-lazy-animation.umd.min.js",
+  
+  
+  "author": "Ijiekhuamen Rex",
+  "license": "MIT",
+  "description": "vue plugin to apply custom transitions or animations on view",
+  "files": [
+    "dist/*",
+    "src/*"
+  ],
+  
+  "homepage": "",
+  "repository": {
+    "type": "git",
+    "url": "https://git.repo"
+  },
+  "bugs": {
+    "url": "https://git/issues"
+  },
+
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build --target lib --name vue-lazy-animation src/main.ts",
     "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "publishOnly": "$npm_execpath build"
   },
   "dependencies": {
     "core-js": "^3.6.4",
@@ -32,5 +57,11 @@
     "eslint-plugin-vue": "^6.2.2",
     "typescript": "~3.8.3",
     "vue-template-compiler": "^2.6.11"
-  }
+  },
+  "keywords": [
+    "animate",
+    "vue",
+    "vue-animate",
+    "vue-lazy"
+  ]
 }
