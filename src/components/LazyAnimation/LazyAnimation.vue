@@ -7,27 +7,21 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { Component, Vue, Prop } from 'vue-property-decorator'
 
-export default Vue.extend({
-  name: 'lazy-animation',
-  props: {
-    name: {
-      type: String,
-      default: ''
-    },
-    height: {
-      type: Number,
-      default: 200
-    }
-  },
+@Component({ name: 'lazy-animation' })
+export default class LazyAnimation extends Vue {
+  @Prop({ default: '', required: false }) name!: string
+  @Prop({ default: 200, required: false }) height!: number
+
   mounted () {
     const el = this.$refs.animateditem as Element
     this.$lazyObserver.startObserving(el)
-  },
+  }
+
   beforeDestroy () {
     const el = this.$refs.animateditem as Element
     this.$lazyObserver.stopObserving(el)
   }
-})
+}
 </script>

@@ -2,13 +2,9 @@
   "name": "vue-lazy-animation",
   "version": "0.1.0",
   "private": true,
-  
   "main": "dist/vue-lazy-animation.umd.min.js",
-  
   "unpkg": "dist/vue-lazy-animation.umd.min.js",
   "jsdelivr": "dist/vue-lazy-animation.umd.min.js",
-  
-  
   "author": "Ijiekhuamen Rex",
   "license": "MIT",
   "description": "vue plugin to apply custom transitions or animations on scroll",
@@ -16,16 +12,14 @@
     "dist/*",
     "src/*"
   ],
-  
   "homepage": "",
   "repository": {
     "type": "git",
-    "url": "https://git.repo"
+    "url": "https://github.com/Recks11/VueLazyAnimation"
   },
   "bugs": {
-    "url": "https://git/issues"
+    "url": "https://github.com/Recks11/VueLazyAnimation/issues"
   },
-
   "scripts": {
     "serve": "vue-cli-service serve",
     "buildlib": "vue-cli-service build --target lib --name vue-lazy-animation src/main.ts",
@@ -36,7 +30,8 @@
   },
   "dependencies": {
     "core-js": "^3.6.4",
-    "vue": "^2.6.11"
+    "vue": "^2.6.11",
+    "vue-property-decorator": "^8.4.1"
   },
   "devDependencies": {
     "@types/jest": "^24.0.19",
