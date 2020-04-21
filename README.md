@@ -33,6 +33,7 @@ The animation will be applied when the `<lazy-animation>` component enters the v
 ```vue
    <your-component v-lazy-animate.name="'transition'"></your-component>
 ```
+using a directive will bring better support for already made projects, and minimise css rewriting
 coming soon...
 
 ## Specifying Transitions/Animations
