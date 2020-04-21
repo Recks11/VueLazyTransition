@@ -1,5 +1,4 @@
-import { IntersectionObserverConfig } from '../types'
-import { VueElement } from '../types'
+import { IntersectionObserverConfig, VueElement } from '../types'
 
 // handle element in view
 function handleElementInView (entry: IntersectionObserverEntry, observer: IntersectionObserver, intersectionRatio: number, config: IntersectionObserverConfig) {

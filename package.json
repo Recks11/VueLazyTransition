@@ -11,7 +11,7 @@
   
   "author": "Ijiekhuamen Rex",
   "license": "MIT",
-  "description": "vue plugin to apply custom transitions or animations on view",
+  "description": "vue plugin to apply custom transitions or animations on scroll",
   "files": [
     "dist/*",
     "src/*"
@@ -28,7 +28,8 @@
 
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --target lib --name vue-lazy-animation src/main.ts",
+    "buildlib": "vue-cli-service build --target lib --name vue-lazy-animation src/main.ts",
+    "buildwc": "vue-cli-service build --target wc --name vue-lazy-animation src/main.ts",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
     "publishOnly": "$npm_execpath build"

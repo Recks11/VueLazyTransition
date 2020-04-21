@@ -1,7 +1,7 @@
 import { IntersectionObserverConfig } from './config'
 
 export declare class ObserverService {
-  constructor (options?: IntersectionObserverConfig, intersectionRatio?: number)
+  constructor (options: IntersectionObserverConfig, intersectionRatio: number)
 
   get observer (): IntersectionObserver
 
