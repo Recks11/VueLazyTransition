@@ -1,6 +1,5 @@
 # Vue Lazy Animation Plugin
-
-This library currently depends on [vue-property-decorator](https://github.com/kaorun343/vue-property-decorator) 
+This is a minimal Vue plugin to enable animation on scroll using custom animations and transitions defined by you.
 
 ## License
 MIT license
@@ -31,10 +30,10 @@ The animation will be applied when the `<lazy-animation>` component enters the v
 
 ### <a id="Directive"></a> Directives
 ```vue
-   <your-component v-lazy-animate.name="'transition'"></your-component>
+   <your-component v-lazyanimate.name="'transition'"></your-component>
 ```
 using a directive will bring better support for already made projects, and minimise css rewriting
-coming soon...
+coming soon... I am still deciding on good implementation
 
 ## Specifying Transitions/Animations
 This component uses the `<transition>` vue component under the hood. it works the same way. the name property of the 
