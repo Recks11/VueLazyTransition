@@ -1,4 +1,4 @@
-import { IntersectionObserverConfig, VueElement } from '../types'
+import { IntersectionObserverConfig, VueElement } from '../../lazy-animate';
 
 // handle element in view
 function handleElementInView (entry: IntersectionObserverEntry, observer: IntersectionObserver, intersectionRatio: number, config: IntersectionObserverConfig) {
@@ -9,7 +9,16 @@ function handleElementInView (entry: IntersectionObserverEntry, observer: Inters
     if (entry.intersectionRatio >= intersectionRatio) {
       vueElement.__vue__.$data.show = true
       vueElement.style.minHeight = ''
-      vueElement.style.display = 'contents'
+
+      if (vueElement.isFromDirective) {
+        vueElement.style.transform = 'translateX(0)'
+        vueElement.style.opacity = '1'
+
+        observer.unobserve(vueElement)
+        vueElement.style.removeProperty('transform')
+        vueElement.style.removeProperty('opacity')
+        return
+      }
 
       // Stop observing after object is in view
       observer.unobserve(entry.target)
@@ -29,15 +38,15 @@ export class ObserverService {
       }, options)
   }
 
-  startObserving (el: Element): void {
-    this.observer.observe(el)
-  }
-
   get observer () {
     return this._observer
   }
 
-  stopObserving (el: Element): void {
+  startObserving (el: VueElement): void {
+    this.observer.observe(el)
+  }
+
+  stopObserving (el: VueElement): void {
     this.observer.unobserve(el)
   }
 }

@@ -1,5 +1,5 @@
-import { LazyAnimationConfig } from '../types'
-import { ObserverService } from './ObserverService'
+import { LazyAnimationConfig } from '../../../lazy-animate';
+import { ObserverService } from '@/service/ObserverService';
 
 export function createObserverService (config: LazyAnimationConfig | undefined): ObserverService {
   if (config !== undefined) {

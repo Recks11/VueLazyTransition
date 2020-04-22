@@ -1,16 +1,20 @@
 {
-  "name": "vue-lazy-animation",
-  "version": "0.1.0",
+  "name": "@vue/lazy-animate",
+  "version": "1.0.0",
+  "description": "vue plugin to apply custom transitions or animations on scroll",
   "private": true,
-  "main": "dist/vue-lazy-animation.umd.min.js",
-  "unpkg": "dist/vue-lazy-animation.umd.min.js",
-  "jsdelivr": "dist/vue-lazy-animation.umd.min.js",
+  "main": "dist/lazy-animate.ssr.js",
+  "browser": "dist/lazy-animate.esm.js",
+  "module": "dist/lazy-animate.esm.js",
+  "unpkg": "dist/lazy-animate.min.js",
+  "types": "lazy-animate.d.ts",
   "author": "Ijiekhuamen Rex",
   "license": "MIT",
-  "description": "vue plugin to apply custom transitions or animations on scroll",
   "files": [
     "dist/*",
-    "src/*"
+    "lazy-animate.d.ts",
+    "src/**/*.vue",
+    "!src/serve-dev.*"
   ],
   "homepage": "",
   "repository": {
@@ -21,45 +25,37 @@
     "url": "https://github.com/Recks11/VueLazyAnimation/issues"
   },
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "buildlib": "vue-cli-service build --target lib --name vue-lazy-animation src/main.ts",
-    "buildwc": "vue-cli-service build --target wc --name vue-lazy-animation src/main.ts",
-    "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint",
-    "publishOnly": "$npm_execpath build"
+    "serve": "vue-cli-service serve src/serve-dev.ts",
+    "build": "cross-env NODE_ENV=production rollup --config build/rollup.config.js",
+    "build:ssr": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format cjs",
+    "build:es": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format es",
+    "build:unpkg": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format iife"
   },
-  "dependencies": {
-    "core-js": "^3.6.4",
-    "vue-property-decorator": "^8.4.1"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "@types/jest": "^24.0.19",
-    "@typescript-eslint/eslint-plugin": "^2.26.0",
-    "@typescript-eslint/parser": "^2.26.0",
-    "@vue/cli-plugin-babel": "~4.3.0",
-    "@vue/cli-plugin-eslint": "~4.3.0",
-    "@vue/cli-plugin-typescript": "~4.3.0",
-    "@vue/cli-plugin-unit-jest": "~4.3.0",
-    "@vue/cli-service": "~4.3.0",
-    "@vue/eslint-config-standard": "^5.1.2",
-    "@vue/eslint-config-typescript": "^5.0.2",
-    "@vue/test-utils": "1.0.0-beta.31",
-    "eslint": "^6.7.2",
-    "eslint-plugin-import": "^2.20.2",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.0",
-    "eslint-plugin-vue": "^6.2.2",
-    "typescript": "~3.8.3",
-    "vue-template-compiler": "^2.6.11"
+    "@babel/core": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
+    "@babel/preset-typescript": "^7.7.7",
+    "@rollup/plugin-alias": "^2.2.0",
+    "@rollup/plugin-commonjs": "^11.0.1",
+    "@rollup/plugin-replace": "^2.2.1",
+    "@vue/cli-plugin-babel": "^4.1.0",
+    "@vue/cli-plugin-typescript": "^4.1.0",
+    "@vue/cli-service": "^4.1.0",
+    "cross-env": "^6.0.3",
+    "minimist": "^1.2.0",
+    "rollup": "^1.27.13",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-terser": "^5.1.3",
+    "rollup-plugin-vue": "^5.1.5",
+    "typescript": "^3.7.3",
+    "vue": "^2.6.10",
+    "vue-template-compiler": "^2.6.10"
   },
-  "peerDependencies":{
-    "vue": "^2.6.11"
+  "peerDependencies": {
+    "vue": "^2.6.10"
   },
-  "keywords": [
-    "animate",
-    "vue",
-    "vue-animate",
-    "vue-lazy"
-  ]
+  "engines": {
+    "node": ">=8"
+  }
 }
