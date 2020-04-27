@@ -1,6 +1,6 @@
 import Vue, { VNode } from 'vue';
 import Dev from '@/serve-dev.vue';
-import { LazyAnimation } from '@/entry';
+import LazyAnimation from '@/entry';
 
 Vue.config.productionTip = false;
 Vue.use(LazyAnimation, {

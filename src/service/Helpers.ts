@@ -1,4 +1,4 @@
-import { VueElement } from '@/../lazy-animate'
+import { VueElement } from '../../lazy-transition'
 
 export function isHtmlElement (el: Element) {
   return el instanceof HTMLElement

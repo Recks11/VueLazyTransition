@@ -1,4 +1,4 @@
-import { IntersectionObserverConfig, VueElement } from '@/../lazy-animate'
+import { IntersectionObserverConfig, VueElement } from '../../lazy-transition'
 import { isVueComponent, addAndRemoveCssClass } from '@/service/Helpers'
 import { DirectiveBinding } from 'vue/types/options'
 
