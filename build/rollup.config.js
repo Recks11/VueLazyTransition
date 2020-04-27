@@ -69,7 +69,7 @@ if (!argv.format || argv.format === 'es') {
     ...baseConfig,
     external,
     output: {
-      file: 'dist/lazy-animate.esm.js',
+      file: 'dist/lazy-transition.esm.js',
       format: 'esm',
       exports: 'named',
     },
@@ -99,9 +99,9 @@ if (!argv.format || argv.format === 'cjs') {
     external,
     output: {
       compact: true,
-      file: 'dist/lazy-animate.ssr.js',
+      file: 'dist/lazy-transition.ssr.js',
       format: 'cjs',
-      name: 'LazyAnimate',
+      name: 'LazyTransition',
       exports: 'named',
       globals,
     },
@@ -127,9 +127,9 @@ if (!argv.format || argv.format === 'iife') {
     external,
     output: {
       compact: true,
-      file: 'dist/lazy-animate.min.js',
+      file: 'dist/lazy-transition.min.js',
       format: 'iife',
-      name: 'LazyAnimate',
+      name: 'LazyTransition',
       exports: 'named',
       globals,
     },

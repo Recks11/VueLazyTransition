@@ -15,13 +15,13 @@ function prepareAndWatch (el: Element, binding: DirectiveBinding, node: VNode) {
   }
 }
 
-export const lazyAnimateDirective = (app: typeof _Vue) => app.directive('lazyanimate', {
+export const lazyAnimateDirective = (app: typeof _Vue) => app.directive('lazytransition', {
   bind: (el, binding, vnode) => {
     prepareAndWatch(el, binding, vnode)
   }
 })
 
-export const lazyAnimateGroup = (app: typeof _Vue) => app.directive('lazyanimategroup', {
+export const lazyAnimateGroup = (app: typeof _Vue) => app.directive('lazytransition-group', {
   bind: (el, binding, vnode) => {
     if (el.hasChildNodes()) {
       const numberOfChildren = el.children.length

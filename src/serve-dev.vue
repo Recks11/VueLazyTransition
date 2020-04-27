@@ -1,12 +1,12 @@
 <script lang="ts">
 import Vue from 'vue'
-import LazyAnimate from '@/component/lazy-animate.vue'
+import LazyTransition from '@/component/lazy-transition.vue'
 import DummyComponent from '@/dummy-component.vue'
 
 export default Vue.extend({
   name: 'ServeDev',
   components: {
-    LazyAnimate,
+    LazyTransition,
     DummyComponent
   }
 });
@@ -25,37 +25,37 @@ export default Vue.extend({
     </section>
     <section class="w-100 h-100">
       <div class="h-100 bg-blue">
-        <lazy-animate :name="'side-fade-left'">
+        <lazy-transition :name="'side-fade-left'">
           <section class="animated"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae, consequatur consequuntur deleniti earum eos explicabo id impedit ipsam iure laborum maiores non nostrum nulla, quia quo saepe sunt temporibus veritatis!</section>
-        </lazy-animate>
+        </lazy-transition>
 
-          <section class="animated bg-spring-green" v-lazyanimate="'side-fade-right'">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur assumenda beatae deserunt dolor doloribus eos id illo, illum iste molestias, omnis perferendis quasi qui ratione reiciendis repudiandae similique temporibus, veniam.</section>
+          <section class="animated bg-spring-green" v-lazytransition="'side-fade-right'">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur assumenda beatae deserunt dolor doloribus eos id illo, illum iste molestias, omnis perferendis quasi qui ratione reiciendis repudiandae similique temporibus, veniam.</section>
 
-        <lazy-animate :name="'side-fade-left'">
+        <lazy-transition :name="'side-fade-left'">
           <section class="animated">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium atque dolorem inventore iste maxime non provident qui voluptatum. Ad consequatur eligendi eos facilis fugiat illum molestias necessitatibus tempore velit voluptatibus?</section>
-        </lazy-animate>
+        </lazy-transition>
 
-          <section class="animated bg-spring-green" v-lazyanimate="'side-fade-right'">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus eligendi expedita ipsa maiores minima molestias, mollitia obcaecati odio perspiciatis praesentium qui rerum, sequi similique unde voluptates. Beatae debitis expedita quam?</section>
+          <section class="animated bg-spring-green" v-lazytransition="'side-fade-right'">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus eligendi expedita ipsa maiores minima molestias, mollitia obcaecati odio perspiciatis praesentium qui rerum, sequi similique unde voluptates. Beatae debitis expedita quam?</section>
 
-        <lazy-animate :name="'side-fade-left'">
+        <lazy-transition :name="'side-fade-left'">
           <section class="animated"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur exercitationem inventore iure, molestias nisi odit praesentium quam, recusandae similique sunt veritatis, voluptas. Asperiores dolores maxime minima recusandae reprehenderit sed ullam!</section>
-        </lazy-animate>
+        </lazy-transition>
 
-          <section class="animated bg-spring-green" v-lazyanimate="'side-fade-right'"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur exercitationem inventore iure, molestias nisi odit praesentium quam, recusandae similique sunt veritatis, voluptas. Asperiores dolores maxime minima recusandae reprehenderit sed ullam!</section>
+          <section class="animated bg-spring-green" v-lazytransition="'side-fade-right'"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur exercitationem inventore iure, molestias nisi odit praesentium quam, recusandae similique sunt veritatis, voluptas. Asperiores dolores maxime minima recusandae reprehenderit sed ullam!</section>
 
-        <lazy-animate :name="'side-fade-left'">
+        <lazy-transition :name="'side-fade-left'">
           <section class="animated"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur exercitationem inventore iure, molestias nisi odit praesentium quam, recusandae similique sunt veritatis, voluptas. Asperiores dolores maxime minima recusandae reprehenderit sed ullam!</section>
-        </lazy-animate>
+        </lazy-transition>
 
-          <section class="animated bg-spring-green" v-lazyanimate="'side-fade-right'"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur exercitationem inventore iure, molestias nisi odit praesentium quam, recusandae similique sunt veritatis, voluptas. Asperiores dolores maxime minima recusandae reprehenderit sed ullam!</section>
+          <section class="animated bg-spring-green" v-lazytransition="'side-fade-right'"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur exercitationem inventore iure, molestias nisi odit praesentium quam, recusandae similique sunt veritatis, voluptas. Asperiores dolores maxime minima recusandae reprehenderit sed ullam!</section>
 
-        <lazy-animate :name="'side-fade-left'">
+        <lazy-transition :name="'side-fade-left'">
           <section class="animated"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur exercitationem inventore iure, molestias nisi odit praesentium quam, recusandae similique sunt veritatis, voluptas. Asperiores dolores maxime minima recusandae reprehenderit sed ullam!</section>
-        </lazy-animate>
+        </lazy-transition>
       </div>
     </section>
     <section class="w-100 h-100">
-      <div class="h-100 bg-green" v-lazyanimategroup="'side-fade-right'">
+      <div class="h-100 bg-green" v-lazytransition-group="'side-fade-right'">
         <section id="1" class="animated bg-dark-blue mt-0"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur dicta enim, maxime quam rem ut! Aliquam atque eos ipsum iure nesciunt nihil non perferendis praesentium quidem quisquam, quo repellendus, voluptatibus!</section>
         <section id="2" class="animated bg-dark-blue"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci alias dignissimos eveniet ex nostrum provident quae rem repellat. Beatae, eos ipsa necessitatibus odio optio placeat quae quidem sunt tempore veniam?</section>
         <section id="3" class="animated bg-dark-blue"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci alias dignissimos eveniet ex nostrum provident quae rem repellat. Beatae, eos ipsa necessitatibus odio optio placeat quae quidem sunt tempore veniam?</section>

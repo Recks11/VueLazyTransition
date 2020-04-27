@@ -2,7 +2,7 @@ import _Vue, { PluginFunction, VueConstructor } from 'vue';
 import { lazyAnimateDirective, lazyAnimateGroup } from '@/directive';
 
 // Import vue component
-import LazyAnimate from '@/component/lazy-animate.vue';
+import LazyAnimate from '@/component/lazy-transition.vue';
 import { createObserverService } from '@/service/observer';
 import { LazyAnimationConfig } from '../lazy-animate';
 

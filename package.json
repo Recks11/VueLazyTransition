@@ -1,8 +1,8 @@
 {
-  "name": "@vue/lazy-animate",
+  "name": "@vue/lazy-transition",
   "version": "0.2.0",
   "description": "vue plugin to apply custom transitions or animations on scroll",
-  "private": true,
+  "private": false,
   "main": "dist/lazy-animate.ssr.js",
   "browser": "dist/lazy-animate.esm.js",
   "module": "dist/lazy-animate.esm.js",
