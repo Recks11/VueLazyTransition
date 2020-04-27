@@ -55,6 +55,13 @@
   "peerDependencies": {
     "vue": "^2.6.10"
   },
+  "keywords": [
+    "vue",
+    "vue transition",
+    "vue animation",
+    "vue scroll",
+    "vuejs"
+  ],
   "engines": {
     "node": ">=8"
   }
