@@ -31,6 +31,7 @@ export declare class ObserverService {
 
   startObserving (el: Element): void
   stopObserving (el: Element): void
+  disposeObserver (): void
 }
 
 declare module 'vue/types/vue' {

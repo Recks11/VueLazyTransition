@@ -1,5 +1,5 @@
 import _Vue, { PluginFunction, VueConstructor } from 'vue';
-import lazyAnimateDirective from '@/directive';
+import { lazyAnimateDirective, lazyAnimateGroup } from '@/directive';
 
 // Import vue component
 import LazyAnimate from '@/component/lazy-animate.vue';
@@ -24,6 +24,7 @@ const install: InstallFunction = function installLazyAnimate(Vue: typeof _Vue, c
 
   // Add Directive
   lazyAnimateDirective(Vue)
+  lazyAnimateGroup(Vue)
 
   // add global variable
   Vue.prototype.$lazyObserver = createObserverService(config)

@@ -1,19 +1,34 @@
 import { VueElement } from '../../lazy-animate'
-import _Vue from 'vue'
+import _Vue, { VNode } from 'vue'
+import { isHtmlElement, isVueComponent } from '@/service/Helpers'
+import { DirectiveBinding } from 'vue/types/options'
 
-function createCssClass (elStyle: CSSStyleDeclaration) {
-  elStyle.transition = 'all 300ms cubic-bezier(.5, .15, .28, .91)'
-  elStyle.transform = 'translateX(25%)'
-  elStyle.opacity = '0'
+function prepareAndWatch (el: Element, binding: DirectiveBinding, node: VNode) {
+  const element = el as VueElement
+  element.isFromDirective = true
+  element.binding = binding
+
+  if (isHtmlElement(el)) {
+    node.context!.$lazyObserver.startObserving(element)
+  } else if (isVueComponent(el)) {
+    element.__vue__.$lazyObserver.startObserving(element)
+  }
 }
 
-const lazyAnimateDirective = (app: typeof _Vue) => app.directive('lazyanimate', {
-  bind: (el, binding) => {
-    const vueEl = el as VueElement
-    createCssClass(vueEl.style)
-    vueEl.isFromDirective = true
-    vueEl.binding = binding
-    vueEl.__vue__.$lazyObserver.startObserving(el)
+export const lazyAnimateDirective = (app: typeof _Vue) => app.directive('lazyanimate', {
+  bind: (el, binding, vnode) => {
+    prepareAndWatch(el, binding, vnode)
   }
 })
-export default lazyAnimateDirective
+
+export const lazyAnimateGroup = (app: typeof _Vue) => app.directive('lazyanimategroup', {
+  bind: (el, binding, vnode) => {
+    if (el.hasChildNodes()) {
+      const numberOfChildren = el.children.length
+      for (let i = 0; i < numberOfChildren; i++) {
+        const elm = el.children.item(i)!;
+        prepareAndWatch(elm, binding, vnode)
+      }
+    }
+  }
+})
