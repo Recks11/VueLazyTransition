@@ -35,9 +35,13 @@ const baseConfig = {
     ],
     vue: {
       css: true,
+      compileTemplate: true,
       template: {
         isProduction: true,
       },
+      defaultLang: {
+        script: 'ts'
+      }
     },
     babel: {
       exclude: 'node_modules/**',
