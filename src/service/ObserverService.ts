@@ -1,5 +1,5 @@
-import { IntersectionObserverConfig, VueElement } from '../../lazy-transition'
-import { isVueComponent, addAndRemoveCssClass } from '@/service/Helpers'
+import { IntersectionObserverConfig, LazyAnimationConfig, VueElement } from '@/../lazy-transition'
+import { addAndRemoveCssClass, isVueComponent } from '@/service/Helpers'
 import { DirectiveBinding } from 'vue/types/options'
 
 // add and remove vue transition classes
@@ -33,12 +33,15 @@ function handleElementInView (entry: IntersectionObserverEntry,
                               observerInstance: ObserverService) {
   // get the element
   const vueElement: VueElement = entry.target as VueElement
-  config.root = null
-  if (entry.isIntersecting) {
-    if (entry.intersectionRatio >= intersectionRatio) {
-      if (isVueComponent(vueElement)) {
+
+  config.root // to be used later for more customisation
+
+  if (entry.isIntersecting) { // if element is intersecting
+    if (entry.intersectionRatio >= intersectionRatio) { // and more than the specified percentage is in view
+
+      if (isVueComponent(vueElement)) { // handle component syntax
         vueElement.__vue__.$data.show = true
-        vueElement.style.minHeight = ''
+        vueElement.removeAttribute('style')
       }
 
       if (vueElement.isFromDirective) {
@@ -56,13 +59,13 @@ function handleElementInView (entry: IntersectionObserverEntry,
 export class ObserverService {
   private readonly _observer!: IntersectionObserver
 
-  constructor (options: IntersectionObserverConfig, intersectionRatio: number) {
+  constructor (config: LazyAnimationConfig) {
     this._observer = new IntersectionObserver(
       (entries) => {
         entries.forEach(entry => {
-          handleElementInView(entry, intersectionRatio, options, this)
+          handleElementInView(entry, config.intersectionRatio, config.options, this)
         })
-      }, options)
+      }, config.options)
   }
 
   get observer () {

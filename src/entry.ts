@@ -2,7 +2,7 @@ import _Vue, { PluginFunction } from 'vue'
 import { lazyAnimateDirective, lazyAnimateGroup } from '@/directive'
 
 // Import vue component
-import LazyTransition from '@/component/lazy-transition.vue'
+import LazyTransitionComponent from '@/component/LazyTransition.vue'
 import { createObserverService } from '@/service/observer'
 import { InstallableComponent, LazyAnimationConfig } from '../lazy-transition'
 
@@ -20,7 +20,7 @@ const install: InstallFunction = function installLazyAnimate(Vue: typeof _Vue, c
 
   install.installed = true
   // Add Component
-  Vue.component('LazyTransition', LazyTransition)
+  Vue.component('LazyTransition', LazyTransitionComponent)
 
   // Add Directive
   lazyAnimateDirective(Vue)
@@ -28,7 +28,7 @@ const install: InstallFunction = function installLazyAnimate(Vue: typeof _Vue, c
 };
 
 // Create module definition for Vue.use()
-const LazyAnimation = {
+const LazyTransitionPlugin = {
   install,
 };
 
@@ -43,16 +43,16 @@ if (typeof window !== 'undefined') {
   GlobalVue = (global as any).Vue
 }
 if (GlobalVue) {
-  (GlobalVue as typeof _Vue).use(LazyAnimation)
+  (GlobalVue as typeof _Vue).use(LazyTransitionPlugin)
 }
 
 // Inject install function into component - allows component
 // to be registered via Vue.use() as well as Vue.component()
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-(LazyTransition as any as InstallableComponent).install = install;
+(LazyTransitionComponent as any as InstallableComponent).install = install;
 //
 // // Export component by default
-export default (LazyTransition as any as InstallableComponent)
+export default (LazyTransitionComponent as any as InstallableComponent)
 
 // It's possible to expose named exports when writing components that can
 // also be used as directives, etc. - eg. import { RollupDemoDirective } from 'rollup-demo';

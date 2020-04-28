@@ -14,8 +14,8 @@ declare const LazyTransition: InstallableComponent;
 export default LazyTransition;
 
 export type IntersectionObserverConfig = {
-  root: any;
-  rootMargin: string;
+  root?: any;
+  rootMargin?: string;
   threshold: number | number[];
 }
 
