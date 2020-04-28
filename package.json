@@ -1,15 +1,21 @@
 {
   "name": "vue-lazy-transition",
   "version": "0.2.6",
-  "description": "vue plugin to apply custom transitions or animations on scroll",
   "private": false,
-  "main": "dist/lazy-transition.ssr.js",
-  "browser": "dist/lazy-transition.esm.js",
-  "module": "dist/lazy-transition.esm.js",
-  "unpkg": "dist/lazy-transition.min.js",
-  "types": "lazy-transition.d.ts",
+  "description": "vue plugin to apply custom transitions or animations on scroll",
   "author": "Ijiekhuamen Rex",
-  "license": "MIT",
+  "scripts": {
+    "serve": "vue-cli-service serve src/serve-dev.ts",
+    "build": "cross-env NODE_ENV=production rollup --config build/rollup.config.js",
+    "build:es": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format es",
+    "build:ssr": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format cjs",
+    "build:unpkg": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format iife",
+    "test:unit": "vue-cli-service test:unit --include tests/unit/config.ts"
+  },
+  "main": "dist/lazy-transition.ssr.js",
+  "module": "dist/lazy-transition.esm.js",
+  "browser": "dist/lazy-transition.esm.js",
+  "unpkg": "dist/lazy-transition.min.js",
   "files": [
     "dist/*",
     "!dist/.DS_STORE",
@@ -19,21 +25,6 @@
     "src/component/**",
     "!src/serve-dev.*"
   ],
-  "homepage": "",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Recks11/VueLazyTransition"
-  },
-  "bugs": {
-    "url": "https://github.com/Recks11/VueLazyTransition/issues"
-  },
-  "scripts": {
-    "serve": "vue-cli-service serve src/serve-dev.ts",
-    "build": "cross-env NODE_ENV=production rollup --config build/rollup.config.js",
-    "build:ssr": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format cjs",
-    "build:es": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format es",
-    "build:unpkg": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format iife"
-  },
   "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.7.7",
@@ -42,15 +33,24 @@
     "@rollup/plugin-alias": "^2.2.0",
     "@rollup/plugin-commonjs": "^11.0.1",
     "@rollup/plugin-replace": "^2.2.1",
+    "@types/chai": "^4.2.11",
+    "@types/mocha": "^5.2.4",
+    "@types/sinon": "^9.0.0",
+    "@types/sinon-chai": "^3.2.4",
     "@vue/cli-plugin-babel": "^4.1.0",
     "@vue/cli-plugin-typescript": "^4.1.0",
+    "@vue/cli-plugin-unit-mocha": "^4.3.1",
     "@vue/cli-service": "^4.1.0",
+    "@vue/test-utils": "1.0.0-beta.31",
+    "chai": "^4.1.2",
     "cross-env": "^6.0.3",
     "minimist": "^1.2.0",
     "rollup": "^1.27.13",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-terser": "^5.1.3",
     "rollup-plugin-vue": "^5.1.5",
+    "sinon": "^9.0.2",
+    "sinon-chai": "^3.5.0",
     "typescript": "^3.7.3",
     "vue": "^2.6.10",
     "vue-template-compiler": "^2.6.10"
@@ -58,6 +58,13 @@
   "peerDependencies": {
     "vue": "^2.6.10"
   },
+  "bugs": {
+    "url": "https://github.com/Recks11/VueLazyTransition/issues"
+  },
+  "engines": {
+    "node": ">=8"
+  },
+  "homepage": "",
   "keywords": [
     "vue",
     "vue transition",
@@ -65,7 +72,10 @@
     "vue scroll",
     "vuejs"
   ],
-  "engines": {
-    "node": ">=8"
-  }
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Recks11/VueLazyTransition"
+  },
+  "types": "lazy-transition.d.ts"
 }

@@ -1,6 +1,6 @@
 <script lang="ts">
 import Vue from 'vue'
-import LazyTransition from '@/component/lazy-transition.vue'
+import LazyTransition from '@/component/LazyTransition.vue'
 import DummyComponent from '@/dummy-component.vue'
 
 export default Vue.extend({
