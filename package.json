@@ -1,6 +1,6 @@
 {
   "name": "vue-lazy-transition",
-  "version": "0.2.6",
+  "version": "0.3.0",
   "private": false,
   "description": "vue plugin to apply custom transitions or animations on scroll",
   "author": "Ijiekhuamen Rex",
