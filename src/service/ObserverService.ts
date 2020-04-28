@@ -45,10 +45,6 @@ function handleElementInView (entry: IntersectionObserverEntry,
         addAndRemoveCssClass(vueElement,
           [vueElement.binding.value + '-enter-active'],
           [vueElement.binding.value + '-enter'])
-
-        // Stop observing after object is in view and transition is done
-        observerInstance.stopObserving(vueElement)
-        return
       }
       // Stop observing after object is in view and transition is done
       observerInstance.stopObserving(vueElement)

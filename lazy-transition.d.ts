@@ -1,17 +1,17 @@
-import Vue, { PluginFunction, VueConstructor } from 'vue';
+import Vue, { PluginFunction, PluginObject } from 'vue';
 import { DirectiveBinding } from 'vue/types/options';
 
 
 interface InstallFunction extends PluginFunction<any> {
   installed?: boolean;
 }
-export interface InstallableComponent extends VueConstructor<Vue> {
+export interface InstallableComponent extends PluginObject<Vue> {
   install: InstallFunction;
 }
 
-declare const LazyAnimate: InstallableComponent;
+declare const LazyTransition: InstallableComponent;
 
-export default LazyAnimate;
+export default LazyTransition;
 
 export type IntersectionObserverConfig = {
   root: any;

@@ -1,9 +1,9 @@
 import Vue, { VNode } from 'vue';
 import Dev from '@/serve-dev.vue';
-import LazyAnimation from '@/entry';
+import LazyTransition  from '@/entry';
 
 Vue.config.productionTip = false;
-Vue.use(LazyAnimation, {
+Vue.use(LazyTransition, {
   options: {
     root: null,
     rootMargin: '0px',
