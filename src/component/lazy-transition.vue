@@ -6,7 +6,7 @@ interface AnimatedItem {
 }
 
 export default Vue.extend({
-  name: 'LazyAnimate', // vue component name
+  name: 'LazyTransition', // vue component name
   props: {
     name: {
       required: false,
@@ -24,11 +24,11 @@ export default Vue.extend({
   },
   mounted(): void {
     const el = this.$refs.animateditem as Element;
-    this.$lazyObserver.startObserving(el);
+    this.$vnode.context!.$lazyObserver.startObserving(el);
   },
   beforeDestroy(): void {
     const el = this.$refs.animateditem as Element;
-    this.$lazyObserver.stopObserving(el);
+    this.$vnode.context!.$lazyObserver.stopObserving(el);
   },
 });
 </script>
