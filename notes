@@ -1,0 +1,18 @@
+-- TODO(FEATURES)
+    - Implement feature to play reverse transition when element goes out of viewport.
+    - Try to implement lazy loading
+
+-- TODO(IDEAS)
+    - maybe add functionality to provide custom observer
+    - maybe add functionality to have more than one observer and a way to reference them like an observer factory
+        [the observer factory will not be seen by the plugin user. to them it will just be add/remove observer]
+    - maybe change directive syntax to v-lazy then parameters will decide functionality
+        example <div v-lazy.load> </div> will be for lazy loading on view
+        example <div v-lazy.transition> </div> will be for lazy transitions [normal behavior]
+        example <div v-lazy.animate> </div> will be for lazy animations
+    - maybe add functionality to supply callback to be executed when element is in view
+        instead of only transitions and animations
+    - maybe restructure the directive values supplied to allow for more custom transitions and other css changes
+        example <div v-lazy.transition="{from: '', to: ''}"> </div>
+        example <div v-lazy.transition.cssClass="'css-class-name'"> </div>
+        example <div v-lazy.transition.style="'element-style'"> </div>

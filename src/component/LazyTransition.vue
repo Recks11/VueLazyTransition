@@ -1,5 +1,6 @@
 <script lang="ts">
 import Vue from 'vue'
+import { VueElement } from '../../lazy-transition';
 
 interface AnimatedItem {
   show: boolean;
@@ -23,13 +24,13 @@ export default Vue.extend({
     };
   },
   mounted(): void {
-    const el = this.$refs.animateditem as Element;
+    const el = this.$refs.animateditem as VueElement;
     this.$lazyObserver.startObserving(el);
   },
   beforeDestroy(): void {
-    const el = this.$refs.animateditem as Element;
+    const el = this.$refs.animateditem as VueElement;
     this.$lazyObserver.stopObserving(el);
-  },
+  }
 });
 </script>
 

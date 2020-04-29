@@ -29,7 +29,7 @@ export declare class ObserverService {
 
   get observer (): IntersectionObserver
 
-  startObserving (el: Element): void
+  startObserving (el: FunctionalVueElement, callback?: Function, addEvents?: boolean, transitionName?: string): void
   stopObserving (el: Element): void
   disposeObserver (): void
 }
@@ -44,4 +44,14 @@ export interface VueElement extends HTMLElement {
   __vue__: Vue
   isFromDirective: boolean
   binding: DirectiveBinding
+}
+
+export interface FunctionalVueElement extends VueElement {
+  callback?: Function
+  transition?: string
+}
+
+export type FunctionalElementBinding = {
+  transition?: string
+  onView: Function
 }

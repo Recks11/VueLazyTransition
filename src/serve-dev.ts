@@ -11,7 +11,6 @@ Vue.use(LazyTransition, {
   },
   intersectionRatio: 0.5
 })
-
 new Vue({
   render: (h): VNode => h(Dev),
 }).$mount('#app');

@@ -1,6 +1,6 @@
-import { VueElement } from '../../lazy-transition'
+import { VueElement } from '@/../lazy-transition'
 import _Vue, { VNode } from 'vue'
-import { isHtmlElement, isVueComponent } from '@/service/Helpers'
+import { getVueInstance, isHtmlElement, isVueComponent } from '@/service/Helpers'
 import { DirectiveBinding } from 'vue/types/options'
 
 function prepareAndWatch (el: Element, binding: DirectiveBinding, node: VNode) {
@@ -8,16 +8,18 @@ function prepareAndWatch (el: Element, binding: DirectiveBinding, node: VNode) {
   element.isFromDirective = true
   element.binding = binding
 
-  if (isHtmlElement(el)) {
-    node.context!.$lazyObserver.startObserving(element)
+  if (isHtmlElement(el) && !isVueComponent(el)) {
+    node.context!.$lazyObserver.startObserving(element, binding.value.onView)
   } else if (isVueComponent(el)) {
-    element.__vue__.$lazyObserver.startObserving(element)
+    getVueInstance(el).$lazyObserver.startObserving(element, binding.value.onView)
   }
 }
 
 export const lazyAnimateDirective = (app: typeof _Vue) => app.directive('lazytransition', {
   bind: (el, binding, vnode) => {
-    prepareAndWatch(el, binding, vnode)
+    if (el.getAttribute('lazy-observing') !== 'true') {
+      prepareAndWatch(el, binding, vnode)
+    }
   }
 })
 
@@ -27,7 +29,9 @@ export const lazyAnimateGroup = (app: typeof _Vue) => app.directive('lazytransit
       const numberOfChildren = el.children.length
       for (let i = 0; i < numberOfChildren; i++) {
         const elm = el.children.item(i)!;
-        prepareAndWatch(elm, binding, vnode)
+        if (elm.getAttribute('lazy-observing') !== 'true') {
+          prepareAndWatch(elm, binding, vnode)
+        }
       }
     }
   }
