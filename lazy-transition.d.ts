@@ -19,7 +19,7 @@ export type IntersectionObserverConfig = {
   threshold: number | number[];
 }
 
-export type LazyAnimationConfig = {
+export type LazyTransitionConfig = {
   options: IntersectionObserverConfig;
   intersectionRatio: number;
 }

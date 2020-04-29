@@ -1,4 +1,4 @@
-import { IntersectionObserverConfig, LazyAnimationConfig, VueElement } from '@/../lazy-transition'
+import { IntersectionObserverConfig, LazyTransitionConfig, VueElement } from '@/../lazy-transition'
 import { addAndRemoveCssClass, isVueComponent } from '@/service/Helpers'
 import { DirectiveBinding } from 'vue/types/options'
 
@@ -59,7 +59,7 @@ function handleElementInView (entry: IntersectionObserverEntry,
 export class ObserverService {
   private readonly _observer!: IntersectionObserver
 
-  constructor (config: LazyAnimationConfig) {
+  constructor (config: LazyTransitionConfig) {
     this._observer = new IntersectionObserver(
       (entries) => {
         entries.forEach(entry => {

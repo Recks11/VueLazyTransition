@@ -4,7 +4,7 @@ import { lazyAnimateDirective, lazyAnimateGroup } from '@/directive'
 // Import vue component
 import LazyTransitionComponent from '@/component/LazyTransition.vue'
 import { createObserverService } from '@/service/observer'
-import { InstallableComponent, LazyAnimationConfig } from '../lazy-transition'
+import { InstallableComponent, LazyTransitionConfig } from '../lazy-transition'
 
 // Define typescript interfaces for autoinstaller
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -13,7 +13,7 @@ interface InstallFunction extends PluginFunction<any> {
 }
 
 // install function executed by Vue.use()
-const install: InstallFunction = function installLazyAnimate(Vue: typeof _Vue, config?: LazyAnimationConfig) {
+const install: InstallFunction = function installLazyAnimate(Vue: typeof _Vue, config?: LazyTransitionConfig) {
   if (install.installed) return
   // add global variable
   Vue.prototype.$lazyObserver = createObserverService(config)

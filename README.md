@@ -6,8 +6,33 @@ This is a minimal Vue plugin to enable transitions or animations on scroll using
 npm i vue-lazy-transition
 ```
 ## Plugin Configuration
-The configuration takes two objects
-...
+To use the plugin, you can choose to use the default configuration,
+```js
+import Vue from 'vue'
+import LazyTransition from 'vue-lazy-transition'
+
+Vue.use(LazyTransition)
+```
+or configure it manually
+```js
+import Vue from 'vue'
+import LazyTransition from 'vue-lazy-transition'
+
+Vue.use(LazyTransition, {
+  options: {
+    root: null,
+    rootMargin: '0px',
+    threshold: [0.5, 0.75, 1]
+  },
+  intersectionRatio: 0.5
+})
+```
+there are 4 items to configure:
+- `root` - (optional) - the element used as the viewport to check if elements to be transitioned are in view. if null or empty the default
+viewport will be used.
+- `rootMargin` - (optional) - margin around the root element
+- `threshold` - (optional) - a number or array of numbers between 0 and 1 representing the percentage of the element that must be in the viewport element before the observer triggers a transition
+- `intersectionRatio` - minimum threshold percentage for the observer declares an element is in the viewport
 
 ## Usage
 This Plugin can be used in two ways

@@ -1,7 +1,7 @@
-import { LazyAnimationConfig } from '@/../lazy-transition'
+import { LazyTransitionConfig } from '@/../lazy-transition'
 import { ObserverService } from '@/service/ObserverService'
 
-const defaultObserverConfig: LazyAnimationConfig = {
+const defaultObserverConfig: LazyTransitionConfig = {
   options: {
     root: null,
     rootMargin: '0px',
@@ -10,7 +10,7 @@ const defaultObserverConfig: LazyAnimationConfig = {
   intersectionRatio: 0
 }
 
-function initConfig (config: LazyAnimationConfig) {
+function initConfig (config: LazyTransitionConfig) {
   config.options.root = config.options.root === undefined ?
     config.options.root = defaultObserverConfig.options.root :
     config.options.root
@@ -26,7 +26,7 @@ function initConfig (config: LazyAnimationConfig) {
   return config
 }
 
-export function createObserverService (config?: LazyAnimationConfig | undefined): ObserverService {
+export function createObserverService (config?: LazyTransitionConfig | undefined): ObserverService {
   if (config !== undefined) {
     config = initConfig(config)
 
