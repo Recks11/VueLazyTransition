@@ -2,7 +2,7 @@
   "name": "vue-lazy-transition",
   "version": "0.3.0",
   "private": false,
-  "description": "vue plugin to apply custom transitions or animations on scroll",
+  "description": "vue plugin to apply custom transitions or animations when an element enters the viewport",
   "author": "Ijiekhuamen Rex",
   "scripts": {
     "serve": "vue-cli-service serve src/serve-dev.ts",
@@ -20,9 +20,6 @@
     "dist/*",
     "!dist/.DS_STORE",
     "lazy-transition.d.ts",
-    "src/service/**",
-    "src/directive/**",
-    "src/component/**",
     "!src/serve-dev.*"
   ],
   "dependencies": {},
