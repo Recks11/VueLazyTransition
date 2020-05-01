@@ -1,15 +1,18 @@
 import Vue, { PluginFunction, PluginObject } from 'vue';
 import { DirectiveBinding } from 'vue/types/options';
 
-
 interface InstallFunction extends PluginFunction<any> {
   installed?: boolean;
 }
+
 export interface InstallableComponent extends PluginObject<Vue> {
   install: InstallFunction;
 }
 
-declare const LazyTransition: InstallableComponent;
+declare const LazyTransition: {
+  Observer: ObserverService,
+  install: InstallFunction
+};
 
 export default LazyTransition;
 
@@ -29,8 +32,16 @@ export declare class ObserverService {
 
   get observer (): IntersectionObserver
 
-  startObserving (el: FunctionalVueElement, callback?: Function, addEvents?: boolean, transitionName?: string): void
+  get observerKey (): string
+
+  addObserver (name: string, root?: Element): void
+
+  changeObserver (name: string, root?: Element): void
+
+  startObserving (el: FunctionalVueElement | VueElement, callback?: Function, transitionName?: string, addEvents?: boolean): void
+
   stopObserving (el: Element): void
+
   disposeObserver (): void
 }
 
@@ -47,6 +58,7 @@ export interface VueElement extends HTMLElement {
 }
 
 export interface FunctionalVueElement extends VueElement {
+  observerKey: string
   callback?: Function
   transition?: string
 }

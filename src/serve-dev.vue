@@ -10,14 +10,14 @@ export default Vue.extend({
     LazyTransition,
     DummyComponent,
     FunctionComponent
-  }
+  },
 });
 </script>
 
 <template>
   <div>
     <section class="fixed fixed-top text-center"> top </section>
-    <main id="container" class="fixed fixed-mid">
+    <main id="container" class="fixed fixed-mid" ref="main">
       <section class=" h-100">
         <div class="h-100 bg-red">
           <div class="center w-100 h-100">
@@ -60,9 +60,9 @@ export default Vue.extend({
             <section class="animated">v-for loop component {{i + 1}}</section>
           </lazy-transition>
 
-          <section class="animated bg-spring-green" v-for="(num, i) in 5" :key="num+5"
+          <div class="animated bg-spring-green" v-for="(num, i) in 5" :key="num+5"
                    v-lazytransition="'side-fade-right'"> v-for loop element {{i}}
-          </section>
+          </div>
 
         </div>
       </section>
@@ -97,6 +97,7 @@ html, body {
 }
 main {
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 #app {
   overflow-y: hidden;
@@ -139,6 +140,7 @@ main {
 .center p {
   border: 2px solid black;
   padding: 20px 30px;
+  width: 600px;
 }
 
 .w-100 {

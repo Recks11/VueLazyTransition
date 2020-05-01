@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { FunctionalVueElement, VueElement } from '../lazy-transition';
+import { FunctionalVueElement, VueElement } from '@/../lazy-transition'
 
 export default Vue.extend({
   name: 'function-component',
@@ -43,22 +43,22 @@ export default Vue.extend({
 
       this.$lazyObserver.startObserving(secondNode, () => {
         this.cloneChildNode(secondNode, newNode)
-      }, true, 'side-fade-right')
+      }, 'side-fade-right', true)
     },
     cloneChildNode (childNode: FunctionalVueElement, parentNode: FunctionalVueElement) {
       if (parentNode.children.length > 20) parentNode.firstChild!.remove();
-      const node = childNode.cloneNode() as VueElement;
+      const node = childNode.cloneNode() as FunctionalVueElement;
       node.textContent = 'CLONED NODE'
       parentNode.append(node)
       this.$lazyObserver.startObserving(node, () => {
         this.cloneChildNode(node, parentNode)
-      }, true, 'side-fade-right')
+      },  'side-fade-right', true)
     }
   },
   mounted (): void {
     const el = this.$refs.pageEnd as VueElement
 
-    this.$lazyObserver.startObserving(el, this.showThings)
+    this.$lazyObserver.startObserving(el, this.showThings, 'side-fade-left', true)
   },
   beforeDestroy (): void {
     const el = this.$refs.pageEnd as VueElement
@@ -66,7 +66,3 @@ export default Vue.extend({
   }
 })
 </script>
-
-<style scoped>
-
-</style>

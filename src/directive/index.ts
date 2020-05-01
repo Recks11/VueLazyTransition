@@ -9,7 +9,12 @@ function prepareAndWatch (el: Element, binding: DirectiveBinding, node: VNode) {
   element.binding = binding
 
   if (isHtmlElement(el) && !isVueComponent(el)) {
-    node.context!.$lazyObserver.startObserving(element, binding.value.onView)
+    const rootVue = node.context
+    if (rootVue) {
+      rootVue.$lazyObserver.startObserving(element, binding.value.onView)
+      } else {
+
+    }
   } else if (isVueComponent(el)) {
     getVueInstance(el).$lazyObserver.startObserving(element, binding.value.onView)
   }

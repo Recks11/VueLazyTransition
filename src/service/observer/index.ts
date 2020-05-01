@@ -20,8 +20,7 @@ function initConfig (config?: LazyTransitionConfig) {
   return defaultObserverConfig
 }
 
-export function createObserverService (config?: LazyTransitionConfig | undefined): ObserverService {
+export const createObserverService = (config?: LazyTransitionConfig | undefined): ObserverService => {
   config = initConfig(config)
-
   return new ObserverService(config)
 }
