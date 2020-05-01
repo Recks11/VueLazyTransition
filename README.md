@@ -12,8 +12,13 @@ This is a minimal Vue plugin to enable transitions or animations on scroll using
 - [Global Variable `$lazyObserver`](#Using the Global Variable)
 
 ## Install
+npm
 ```bash
 npm i vue-lazy-transition
+```
+yarn
+```bash
+yarn add vue-lazy-transition
 ```
 ## Plugin Configuration
 To use the plugin, you can choose to use the default configuration,
