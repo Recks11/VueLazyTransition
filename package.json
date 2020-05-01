@@ -4,6 +4,17 @@
   "private": false,
   "description": "vue plugin to apply custom transitions or animations when an element enters the viewport",
   "author": "Ijiekhuamen Rex",
+  "types": "types/index.d.ts",
+  "main": "dist/lazy-transition.ssr.js",
+  "module": "dist/lazy-transition.esm.js",
+  "browser": "dist/lazy-transition.esm.js",
+  "unpkg": "dist/lazy-transition.min.js",
+  "files": [
+    "dist/*",
+    "!dist/.DS_STORE",
+    "types/index.d.ts",
+    "!src/serve-dev.*"
+  ],
   "scripts": {
     "serve": "vue-cli-service serve src/serve-dev.ts",
     "build": "cross-env NODE_ENV=production rollup --config build/rollup.config.js",
@@ -12,16 +23,6 @@
     "build:unpkg": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format iife",
     "test:unit": "vue-cli-service test:unit --include tests/unit/config.ts"
   },
-  "main": "dist/lazy-transition.ssr.js",
-  "module": "dist/lazy-transition.esm.js",
-  "browser": "dist/lazy-transition.esm.js",
-  "unpkg": "dist/lazy-transition.min.js",
-  "files": [
-    "dist/*",
-    "!dist/.DS_STORE",
-    "lazy-transition.d.ts",
-    "!src/serve-dev.*"
-  ],
   "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.7.7",
@@ -75,6 +76,5 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/Recks11/VueLazyTransition"
-  },
-  "types": "lazy-transition.d.ts"
+  }
 }
