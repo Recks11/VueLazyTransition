@@ -1,6 +1,6 @@
 {
   "name": "vue-lazy-transition",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "private": false,
   "description": "vue plugin to apply custom transitions or animations when an element enters the viewport",
   "author": "Ijiekhuamen Rex",
@@ -17,6 +17,7 @@
   ],
   "scripts": {
     "serve": "vue-cli-service serve src/serve-dev.ts",
+    "generate": "vue-cli-service build src/serve-dev.ts",
     "build": "cross-env NODE_ENV=production rollup --config build/rollup.config.js",
     "build:es": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format es",
     "build:ssr": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format cjs",
