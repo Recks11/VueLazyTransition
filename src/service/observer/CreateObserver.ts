@@ -1,5 +1,5 @@
-import { LazyTransitionConfig } from '@/../types'
 import { ObserverService } from '@/service/ObserverService'
+import { LazyTransitionConfig } from '@/../types'
 
 const defaultObserverConfig: LazyTransitionConfig = {
   options: {

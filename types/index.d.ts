@@ -1,5 +1,4 @@
-import Vue, { PluginFunction, PluginObject } from 'vue';
-import { DirectiveBinding } from 'vue/types/options';
+import Vue, { PluginFunction, PluginObject } from 'vue'
 
 interface InstallFunction extends PluginFunction<any> {
   installed?: boolean;
@@ -9,22 +8,28 @@ export interface InstallableComponent extends PluginObject<Vue> {
   install: InstallFunction;
 }
 
-declare const LazyTransition: {
+declare const LazyTransitionPlugin: {
   Observer: ObserverService,
   install: InstallFunction
 };
 
-export default LazyTransition;
+declare module 'vue/types/vue' {
+  interface Vue {
+    $lazyObserver: ObserverService;
+  }
+}
+
+export default LazyTransitionPlugin;
+
+export type LazyTransitionConfig = {
+  options: IntersectionObserverConfig;
+  intersectionRatio: number;
+}
 
 export type IntersectionObserverConfig = {
   root?: any;
   rootMargin?: string;
   threshold: number | number[];
-}
-
-export type LazyTransitionConfig = {
-  options: IntersectionObserverConfig;
-  intersectionRatio: number;
 }
 
 export declare class ObserverService {
@@ -34,39 +39,42 @@ export declare class ObserverService {
 
   get observerKey (): string
 
-  addObserver (name: string, root?: Element): void
+  createObserver (name: string, root?: Element): void
 
   changeObserver (name: string, root?: Element): void
 
-  startObserving (el: FunctionalVueElement | VueElement, callback?: Function, transitionName?: string, addEvents?: boolean): void
+  startObserving (el: FunctionalVueElement | VueElement | Element, binding: ObserverBinding): void
 
-  stopObserving (el: Element): void
+  observeWith (observer: string, el: FunctionalVueElement | VueElement | Element, binding: ObserverBinding): void
+
+  stopObserving (el: FunctionalVueElement | VueElement | Element): void
 
   disposeObserver (): void
 }
 
-declare module 'vue/types/vue' {
-  interface Vue {
-    $lazyObserver: ObserverService;
-  }
+export type ObserverBinding = {
+  transition?: string;
+  vueTransition?: boolean;
+  onView?: Function;
+  onExit?: Function;
 }
 
 export interface VueElement extends HTMLElement {
   __vue__: Vue
   isFromDirective: boolean
-  binding: DirectiveBinding
+  binding: ObserverBinding
 }
 
 export interface FunctionalVueElement extends VueElement {
   observerKey: string
-  callback?: Function
+  callback?: boolean
   // exitCallback?: Function // To be used later
   transition?: string
   // customTransition?: string // to be used later
 }
 
-export type FunctionalElementBinding = {
-  transition?: string
-  // onView?: Function,
-  // onExit?: Function
+export interface FunTupule {
+  onView?: Function
+  onExit?: Function
 }
+
