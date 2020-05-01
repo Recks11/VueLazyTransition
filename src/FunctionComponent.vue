@@ -1,5 +1,5 @@
 <template>
-  <section class="animated bg-darkslategray" ref="pageEnd">
+  <section id="fs" class="animated bg-darkslategray" ref="pageEnd">
     This element does not use the v-lazytransition binding or lazy-transition component.
     <p> {{ text }} </p>
   </section>
@@ -33,32 +33,45 @@ export default Vue.extend({
     },
     duplicateAndClone () {
       const el = this.$refs.pageEnd as FunctionalVueElement
-      const newNode = el.cloneNode() as FunctionalVueElement;
-      const secondNode = el.cloneNode() as FunctionalVueElement; // node to be cloned
-      secondNode.innerText = 'This is the initial cloned node';
-      newNode.classList.remove('animated', 'bg-darkslategray');
+      const newNode = el.cloneNode() as FunctionalVueElement
+      const secondNode = el.cloneNode() as FunctionalVueElement // node to be cloned
+      secondNode.innerText = 'This is the initial cloned node'
+      newNode.classList.remove('animated', 'bg-darkslategray')
 
       el.parentElement!.appendChild(newNode)
       newNode.appendChild(secondNode)
 
-      this.$lazyObserver.startObserving(secondNode, () => {
-        this.cloneChildNode(secondNode, newNode)
-      }, 'side-fade-right', true)
+      this.$lazyObserver.observeWith('func', secondNode, {
+        transition: 'side-fade-right',
+        vueTransition: true,
+        onView: () => {
+          this.cloneChildNode(secondNode, newNode)
+        }
+      })
     },
     cloneChildNode (childNode: FunctionalVueElement, parentNode: FunctionalVueElement) {
-      if (parentNode.children.length > 20) parentNode.firstChild!.remove();
-      const node = childNode.cloneNode() as FunctionalVueElement;
+      if (parentNode.children.length > 20) parentNode.firstChild!.remove()
+      const node = childNode.cloneNode() as FunctionalVueElement
       node.textContent = 'CLONED NODE'
       parentNode.append(node)
-      this.$lazyObserver.startObserving(node, () => {
-        this.cloneChildNode(node, parentNode)
-      },  'side-fade-right', true)
+
+      this.$lazyObserver.observeWith('func', node, {
+        transition: 'side-fade-right',
+        vueTransition: true,
+        onView: () => {
+          this.cloneChildNode(node, parentNode)
+        }
+      })
     }
   },
   mounted (): void {
     const el = this.$refs.pageEnd as VueElement
 
-    this.$lazyObserver.startObserving(el, this.showThings, 'side-fade-left', true)
+    this.$lazyObserver.observeWith('func', el, {
+      transition: 'side-fade-left',
+      vueTransition: true,
+      onView: this.showThings
+    })
   },
   beforeDestroy (): void {
     const el = this.$refs.pageEnd as VueElement

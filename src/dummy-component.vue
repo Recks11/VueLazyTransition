@@ -1,6 +1,6 @@
 <template>
   <section class="animated mb-5" id="inner"
-           v-lazytransition.function="{transition: this.transition, onView: this.changeText}">
+           v-lazytransition="{transition: this.transition, onView: this.changeText}">
     Dummy component: <slot/>
     <p> {{ this.text }} </p>
   </section>
@@ -13,7 +13,8 @@ export default Vue.extend({
   props: {
     transition: {
       type: String,
-      required: false
+      required: false,
+      default: 'side-fade-right'
     }
   },
   data () {

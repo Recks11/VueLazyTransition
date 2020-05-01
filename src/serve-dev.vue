@@ -3,7 +3,6 @@ import Vue from 'vue'
 import LazyTransition from '@/component/LazyTransition.vue'
 import DummyComponent from '@/dummy-component.vue'
 import FunctionComponent from '@/FunctionComponent.vue'
-// import { FunctionalVueElement } from '@/../types'
 
 export default Vue.extend({
   name: 'ServeDev',
@@ -12,31 +11,15 @@ export default Vue.extend({
     DummyComponent,
     FunctionComponent
   },
-  // mounted() {
-  //   console.log('mounted')
-  //   const rec = this.$lazyObserver.observer.takeRecords()
-  //   this.$lazyObserver.disposeObserver()
-  //
-  //
-  //   const main = this.$refs.main as HTMLElement;
-  //   console.log(main)
-  //   this.$lazyObserver.addObserver('new', main)
-  //
-  //   rec.forEach(value => {
-  //     console.log(value.target)
-  //     this.$lazyObserver.changeObserver('default')
-  //     this.$lazyObserver.stopObserving(value.target)
-  //     this.$lazyObserver.changeObserver('new')
-  //     this.$lazyObserver.startObserving(value.target as FunctionalVueElement)
-  //   })
-  // }
+  mounted (): void {
+  }
 });
 </script>
 
 <template>
   <div>
-    <section class="fixed fixed-top text-center"> top </section>
-    <main id="container" class="fixed fixed-mid" ref="main">
+    <section class="fixed fixed-top text-center"> top</section>
+    <main id="container" class="fixed fixed-mid" ref="main" v-lazytransition-root="{observer: 'func'}">
       <section class=" h-100">
         <div class="h-100 bg-red">
           <div class="center w-100 h-100">
@@ -80,7 +63,7 @@ export default Vue.extend({
           </lazy-transition>
 
           <div class="animated bg-spring-green" v-for="(num, i) in 5" :key="num+5"
-                   v-lazytransition="'side-fade-right'"> v-for loop element {{i}}
+               v-lazytransition="'side-fade-right'"> v-for loop element {{i}}
           </div>
 
         </div>
@@ -93,19 +76,21 @@ export default Vue.extend({
           </section>
           <section id="3" class="animated bg-dark-blue"> regular element in transition group
           </section>
-          <dummy-component id="5" class="animated bg-dark-blue" :transition="'side-fade-right'"> Component in transition group
+          <dummy-component id="5" class="animated bg-dark-blue"> Component in transition
+            group
           </dummy-component>
-          <dummy-component id="9" class="animated bg-dark-blue" :transition="'side-fade-right'"> Component in transition group
+          <dummy-component id="9" class="animated bg-dark-blue"> Component in transition
+            group
           </dummy-component>
           <section id="11" class="animated bg-dark-blue"> regular element in transition group
           </section>
         </div>
       </section>
-      <section  class="w-100">
+      <section class="w-100">
         <function-component></function-component>
       </section>
     </main>
-    <section class="fixed fixed-bottom text-center"> BOTTOM </section>
+    <section class="fixed fixed-bottom text-center"> BOTTOM</section>
   </div>
 </template>
 <style>
@@ -114,19 +99,24 @@ html, body {
   width: 100%;
   overflow-y: hidden;
 }
+
 main {
   overflow-y: scroll;
   overflow-x: hidden;
 }
+
 #app {
   overflow-y: hidden;
 }
+
 .fixed {
   position: fixed;
 }
+
 .absolute {
   position: relative;
 }
+
 .fixed-top {
   left: 0;
   right: 0;
@@ -135,6 +125,7 @@ main {
   background-color: beige;
   border-bottom: 2px solid #1E202F;
 }
+
 .fixed-bottom {
   left: 0;
   right: 0;
@@ -143,12 +134,14 @@ main {
   background-color: beige;
   border-top: 2px solid #1E202F;
 }
+
 .fixed-mid {
   top: 80px;
   right: 0;
   left: 0;
   bottom: 80px;
 }
+
 .center {
   display: flex;
   flex-direction: column;
@@ -178,6 +171,7 @@ main {
   background-color: #1E202F;
   color: whitesmoke;
 }
+
 .bg-darkslategray {
   background-color: darkslategray;
   color: whitesmoke;
@@ -194,23 +188,28 @@ main {
   border: 2px solid black;
   padding: 20px;
 }
-@media screen and (max-width: 768px){
+
+@media screen and (max-width: 768px) {
   .animated {
     width: calc(80vw);
+    height: 10%;
+    margin: 20px auto;
   }
+
   .center p {
     width: 80vw;
   }
 }
+
 /*Transitions*/
 .side-fade-left-enter-active,
 .side-fade-right-enter-active {
-  transition: all 300ms cubic-bezier(.5, .15, .28, .91);
+  transition: all 400ms cubic-bezier(.14, 1.0, .38, 1.0);
 }
 
 .side-fade-left-leave-active,
 .side-fade-right-leave-active {
-  transition: all 300ms cubic-bezier(.15, .5, .6, 1);
+  transition: all 400ms cubic-bezier(.15, .5, .6, 1);
 }
 
 .side-fade-left-enter,
@@ -223,5 +222,17 @@ main {
 .side-fade-right-leave-to {
   transform: translateX(-100px);
   opacity: 0;
+}
+
+@media only screen and (max-width: 768px) {
+  .side-fade-left-enter,
+  .side-fade-left-leave-to {
+    transform: translateX(20px);
+  }
+
+  .side-fade-right-enter,
+  .side-fade-right-leave-to {
+    transform: translateX(-20px);
+  }
 }
 </style>
