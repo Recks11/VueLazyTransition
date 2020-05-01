@@ -78,6 +78,7 @@ For Example:
 There are two lazy transition directives: 
 - `v-lazytransition`
 - `v-lazytransition-group`
+- `v-lazytransition-root`
 
 When you want to apply a vue transition to a single component or HTMLElement, you simply add the `v-lazytransition` directive
 and the name of the transition you created for the element.
