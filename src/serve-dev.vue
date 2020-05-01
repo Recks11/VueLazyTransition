@@ -3,6 +3,7 @@ import Vue from 'vue'
 import LazyTransition from '@/component/LazyTransition.vue'
 import DummyComponent from '@/dummy-component.vue'
 import FunctionComponent from '@/FunctionComponent.vue'
+import { FunctionalVueElement } from '../lazy-transition'
 
 export default Vue.extend({
   name: 'ServeDev',
@@ -11,6 +12,24 @@ export default Vue.extend({
     DummyComponent,
     FunctionComponent
   },
+  // mounted() {
+  //   console.log('mounted')
+  //   const rec = this.$lazyObserver.observer.takeRecords()
+  //   this.$lazyObserver.disposeObserver()
+  //
+  //
+  //   const main = this.$refs.main as HTMLElement;
+  //   console.log(main)
+  //   this.$lazyObserver.addObserver('new', main)
+  //
+  //   rec.forEach(value => {
+  //     console.log(value.target)
+  //     this.$lazyObserver.changeObserver('default')
+  //     this.$lazyObserver.stopObserving(value.target)
+  //     this.$lazyObserver.changeObserver('new')
+  //     this.$lazyObserver.startObserving(value.target as FunctionalVueElement)
+  //   })
+  // }
 });
 </script>
 

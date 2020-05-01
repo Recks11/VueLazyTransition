@@ -60,10 +60,13 @@ export interface VueElement extends HTMLElement {
 export interface FunctionalVueElement extends VueElement {
   observerKey: string
   callback?: Function
+  // exitCallback?: Function // To be used later
   transition?: string
+  // customTransition?: string // to be used later
 }
 
 export type FunctionalElementBinding = {
   transition?: string
-  onView: Function
+  // onView?: Function,
+  // onExit?: Function
 }
