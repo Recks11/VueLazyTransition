@@ -1,6 +1,6 @@
 <script lang="ts">
 import Vue from 'vue'
-import { VueElement } from '@/../lazy-transition';
+import { VueElement } from '@/../types';
 
 interface AnimatedItem {
   show: boolean;

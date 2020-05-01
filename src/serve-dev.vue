@@ -3,7 +3,7 @@ import Vue from 'vue'
 import LazyTransition from '@/component/LazyTransition.vue'
 import DummyComponent from '@/dummy-component.vue'
 import FunctionComponent from '@/FunctionComponent.vue'
-import { FunctionalVueElement } from '../lazy-transition'
+// import { FunctionalVueElement } from '@/../types'
 
 export default Vue.extend({
   name: 'ServeDev',

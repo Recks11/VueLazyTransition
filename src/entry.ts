@@ -1,6 +1,6 @@
 import _Vue, { PluginFunction } from 'vue'
 import { lazyAnimateDirective, lazyAnimateGroup } from '@/directive'
-import { InstallableComponent, LazyTransitionConfig } from '../lazy-transition'
+import { InstallableComponent, LazyTransitionConfig } from '@/../types'
 import LazyTransitionComponent from '@/component/LazyTransition.vue'
 import { ObserverService } from '@/service/ObserverService'
 import { createObserverService } from '@/service/observer';

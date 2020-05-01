@@ -1,4 +1,4 @@
-import { FunctionalVueElement, LazyTransitionConfig, VueElement } from '@/../lazy-transition'
+import { FunctionalVueElement, LazyTransitionConfig, VueElement } from '@/../types'
 import { addAndRemoveCssClass, getVueInstance, isFunctionalElement, isVueComponent } from '@/service/Helpers'
 import { ObserverFactory } from '@/service/factory/ObserverFactory'
 

@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { FunctionalVueElement, VueElement } from '@/../lazy-transition'
+import { FunctionalVueElement, VueElement } from '@/../types'
 
 export default Vue.extend({
   name: 'function-component',

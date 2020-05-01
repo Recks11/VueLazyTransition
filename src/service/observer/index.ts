@@ -1,4 +1,4 @@
-import { LazyTransitionConfig } from '@/../lazy-transition'
+import { LazyTransitionConfig } from '@/../types'
 import { ObserverService } from '@/service/ObserverService'
 
 const defaultObserverConfig: LazyTransitionConfig = {

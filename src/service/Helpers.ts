@@ -1,4 +1,4 @@
-import { VueElement, FunctionalVueElement } from '../../lazy-transition'
+import { VueElement, FunctionalVueElement } from '@/../types'
 
 export function isHtmlElement (el: Element) {
   return el instanceof HTMLElement

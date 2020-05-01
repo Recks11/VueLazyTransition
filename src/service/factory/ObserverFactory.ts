@@ -1,4 +1,4 @@
-import { LazyTransitionConfig } from '@/../lazy-transition'
+import { LazyTransitionConfig } from '@/../types'
 import { handleElementInView, ObserverService } from '@/service/ObserverService'
 
 export class ObserverFactory {

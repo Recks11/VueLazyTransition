@@ -1,4 +1,4 @@
-import { VueElement } from '@/../lazy-transition'
+import { VueElement } from '@/../types'
 import _Vue, { VNode } from 'vue'
 import { getVueInstance, isHtmlElement, isVueComponent } from '@/service/Helpers'
 import { DirectiveBinding } from 'vue/types/options'
