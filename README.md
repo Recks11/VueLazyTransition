@@ -1,6 +1,16 @@
 # Vue Lazy Transition Plugin
 This is a minimal Vue plugin to enable transitions or animations on scroll using custom animations and transitions defined by you.
 
+## Table of contents
+
+- [Install](#Install)
+- [Configuration](#Configuration)
+- [Usage](#Usage)
+    - [Component Syntax](#Component)
+    - [Directive Syntax](#Directive)
+- [Specifying CSS Transitions](#Specifying Transitions/Animations)
+- [Global Variable `$lazyObserver`](#Using the Global Variable)
+
 ## Install
 ```bash
 npm i vue-lazy-transition
@@ -135,12 +145,22 @@ or as a directive, provide the name
 </template>
 ```
 
-### CUSTOMISING BEHAVIOR WITH GLOBAL VARIABLE
+### Using the Global Variable
 the `$lazyObserver` instance variable gives access to the internal observer instance. you can use this to manually 
 observe elements via `refs` or to manually dispose the observer.
 
-### TODO
-- add leave transitions
-- Finish Customising Behavior Plugin
+you can also use the `$lazyObserver` to manually observe an element in the DOM.
+
+
+## SETTING UP FOR DEVELOPMENT
+
+clone the repository and run the dev server
+```zsh
+git clone https://github.com/Recks11/VueLazyTransition.git LazyTransitions
+cd LazyTransitions
+npm install
+npm run serve
+```
+
 ## License
 MIT license
