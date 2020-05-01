@@ -1,6 +1,12 @@
-import { FunctionalVueElement, LazyTransitionConfig, VueElement } from '@/../types'
-import { addAndRemoveCssClass, getVueInstance, isFunctionalElement, isVueComponent } from '@/service/Helpers'
+import {
+  addAndRemoveCssClass,
+  getVueInstance,
+  hasCallback,
+  isLazyTransitionComponent, makeStr,
+  setTransition
+} from '@/service/util/Helpers'
 import { ObserverFactory } from '@/service/factory/ObserverFactory'
+import { FunctionalVueElement, FunTupule, LazyTransitionConfig, ObserverBinding, VueElement } from '@/../types'
 
 function startTransition (element: VueElement, transition: string) {
   addAndRemoveCssClass(element,
@@ -9,147 +15,186 @@ function startTransition (element: VueElement, transition: string) {
 }
 
 // Run when element is in view
+// @TODO (Make Replaceable)
 export function handleElementInView (entry: IntersectionObserverEntry,
-                              config: LazyTransitionConfig,
+                                     config: LazyTransitionConfig,
                                      obSer: ObserverService) {
   // get the element
-  const vueElement: FunctionalVueElement = entry.target as FunctionalVueElement
+  const elm: FunctionalVueElement = entry.target as FunctionalVueElement
 
   config.options.root // to be used later for more customisation
 
-  if (entry.isIntersecting) { // if element is intersecting
+  if (entry.isIntersecting) {
     if (entry.intersectionRatio >= config.intersectionRatio) {
       // and more than the specified percentage is in view
-      if (isVueComponent(vueElement)) {
-        // handle component syntax
-        // TODO(make it more specific to Lazy-Transition)
-        getVueInstance(vueElement).$data.show = true
-        vueElement.removeAttribute('style')
-      }
 
-      let transition = '' // transition is empty
+      if (isLazyTransitionComponent(elm)) {
+        getVueInstance(elm).$data.lazyTransitionShow = true
+        elm.removeAttribute('style')
 
-      // if element comes from a directive, the transition is either the transition value or the transition string
-      if (vueElement.isFromDirective) {
-        transition = vueElement.binding.value.transition || vueElement.binding.value
-      }
+      } else {
 
-      if (vueElement.transition) {
-        transition = vueElement.transition
-      }
+        const transition = elm.transition
+        const id = elm.getAttribute('ltr-id')
 
-      // if there is a transition, start transition
-      if (transition && transition.length !== 0) {
-        startTransition(vueElement, transition.toString())
-      }
+        // if there is a transition, start transition
+        if (transition && transition.length !== 0) {
+          startTransition(elm, transition)
+        }
 
-
-      if (isFunctionalElement(vueElement)) {
-        obSer.stopObserving(vueElement)
-        const functionalEl = vueElement as FunctionalVueElement
-        functionalEl.callback!()
-        functionalEl.callback = undefined
+        if (hasCallback(elm) && id) {
+          if (obSer.calMap.has(id)) {
+            const fnTpl = obSer.calMap.get(id)
+            if (fnTpl) {
+              if (fnTpl.onView) fnTpl.onView()
+              // if (fnTpl.onExit) fnTpl.onExit()
+            }
+          }
+          elm.callback = false
+          elm.removeAttribute('ltr-id')
+        }
       }
       // Stop observing after object is in view and transition is done
-      obSer.stopObserving(vueElement)
+      obSer.stopObserving(elm)
     }
   }
 }
 
 // add and remove vue transition classes
-function addTransitionEvents (el: Element, transitionName: string, state: string) {
-  if (transitionName === undefined) return
-  const element = el as HTMLElement
+function addTransitionEvents (el: FunctionalVueElement, state: string) {
+  if (!el.transition) return
+  const tr = el.transition
+  const trn = el.transition + '-' + state
+  const trnActive = trn + '-active'
+  const trnTo = trn + '-to'
 
-  const transition = transitionName + '-' + state
-  const transitionActive = transition + '-active'
-  const transitionTo = transition + '-to'
+  if (tr.length !== 0) {
+    addAndRemoveCssClass(el, [trn])
 
-  if (transitionName && transitionName.length !== 0) {
-    addAndRemoveCssClass(element, [transition])
-
-    element.addEventListener('transitionstart', () => {
-      addAndRemoveCssClass(element, [transitionTo], [transition])
+    el.addEventListener('transitionstart', () => {
+      addAndRemoveCssClass(el, [trnTo], [trn])
     }, { once: true })
 
-    element.addEventListener('transitionrun', () => {
-      addAndRemoveCssClass(element, [transitionActive])
+    el.addEventListener('transitionrun', () => {
+      addAndRemoveCssClass(el, [trnActive])
     }, { once: true })
 
-    element.addEventListener('transitionend', () => {
-      addAndRemoveCssClass(element, undefined, [transitionActive, transition, transitionTo])
+    el.addEventListener('transitionend', () => {
+      addAndRemoveCssClass(el, undefined, [trn, trnActive, trnTo])
     }, { once: true })
   }
 }
 
 export class ObserverService {
-  public static instances: number
-  private _observerKey: string;
-  private readonly observerFactory: ObserverFactory
+  private _obKey: string
+  private readonly _factory: ObserverFactory
+  private readonly obsFn: IntersectionObserverCallback
+  private _calMap: Map<String, FunTupule> = new Map()
 
   constructor (config: LazyTransitionConfig) {
-    this.observerFactory = new ObserverFactory(config, this)
-    this.observerFactory.createObserver('default')
-    this._observerKey = 'default'
-    ObserverService.instances = (ObserverService.instances || 0) + 1
+    this._factory = new ObserverFactory(config)
+    this._obKey = 'default'
+    this.obsFn = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach(entry => {
+        handleElementInView(entry, config, this)
+      })
+    }
+    this.factory.createObserver(this.observerKey, config, this.obsFn)
   }
 
+  //return observer with active key from the observer factory
   get observer () {
-    return this.observerFactory.getObserver(this.observerKey)!
+    return this._factory.getObserver(this.observerKey)!
   }
 
   get observerKey () {
-    return this._observerKey
+    return this._obKey
+  }
+
+  get calMap () {
+    return this._calMap
   }
 
   get factory () {
-    return this.observerFactory
+    return this._factory
   }
 
-  changeObserver(name: string, root?: Element) {
-    if (this.observerFactory.has(name)) {
-      this._observerKey = name
-    } else {
-      this.addObserver(name, root)
-    }
+  // change observer reference to the one with provided name
+  // create one if it does not exist
+  changeObserver (name: string, root?: Element) {
+    this._factory.has(name) ?
+      this._obKey = name :
+      this.createObserver(name, root)
   }
 
-  addObserver(name: string, root?: Element) {
+  // add an observer with the provided root or null root
+  // using default observer function
+  // make the observer use the provided callback or default
+  createObserver (name: string, root?: Element, callback?: IntersectionObserverCallback) {
     const config = this.factory.config
+    // set the root element
     config.options.root = root ? root : null
-    this.factory.createObserver(name, config)
-    this.changeObserver(name)
+
+    // create the observer
+    this.factory.createObserver(name, config, callback || this.obsFn)
   }
 
-  startObserving (el: FunctionalVueElement, callback?: Function, transition?: string, addEvents?: boolean): void {
-    // if a callback is specified, it will be attached here
-    if (callback) el.callback = callback
+  startObserving (el: FunctionalVueElement,
+                  binding: ObserverBinding): void {
 
-    // attach events if the element comes from a directive
-    if (el.isFromDirective) addTransitionEvents(el, el.binding.value.transition || el.binding.value, 'enter')
+    // if a callback is specified, attach it
+    // TODO(Test if it can be gotten in DOM. if it can, remove it lol)
+    if (binding.onView) {
+      el.callback = true
+      const fn = genKey(el)
+      el.setAttribute('ltr-id', fn)
+      this._calMap.set(fn, { onView: binding.onView, onExit: binding.onExit })
+    }
+
+    // add transition name to element
+    if (binding.vueTransition) setTransition(el, binding.transition)
 
     // attach events if a transition is specified and addEvents is true
-    if (addEvents && transition) addTransitionEvents(el, transition, 'enter')
-    // if the element is not from a directive (this method is called elsewhere) then the transition is the specified string
-    if (transition) el.transition = transition
+    if (binding.vueTransition && binding.transition) addTransitionEvents(el, 'enter')
 
+    // set the observer key
     el.observerKey = this.observerKey
+
     // observe element
     this.observer.observe(el)
-    // add observing attribute
+
+    // add observing attribute after observing
     el.setAttribute('lazy-observing', 'true')
   }
 
-  stopObserving (el: FunctionalVueElement): void {
-    this.factory.getObserver(el.observerKey)?.unobserve(el)
-    el.removeAttribute('lazy-observing')
+  observeWith (observer: string, el: FunctionalVueElement, binding: ObserverBinding) {
+    const preObs = this._obKey
+    if (this.factory.has(observer)) {
+      this._obKey = observer
+    }
+    this.changeObserver(observer)
+    this.startObserving(el, binding)
+    this.changeObserver(preObs)
   }
 
-  disposeObserver (): void {
-    this.observer.takeRecords().forEach(entry => {
-      entry.target.removeAttribute('lazy-observing')
-    })
-    this.observer.disconnect();
-    this.observerFactory.removeObserver(this.observerKey)
+  stopObserving (el: FunctionalVueElement): void {
+    // get the observer for the specific element
+    this.factory.getObserver(el.observerKey)?.unobserve(el)
+    el.removeAttribute('lazy-observing')
+    el.removeAttribute('ltr-id')
   }
+
+  disposeObserver (name?: string): void {
+    this._factory.removeObserver(name || this.observerKey)
+  }
+
+  killAll (): void {
+    this._calMap.clear()
+    this.factory.deleteAll()
+  }
+}
+
+function genKey (el: FunctionalVueElement) {
+  const str = makeStr(5);
+  return `${ el.observerKey }-${ str }`
 }

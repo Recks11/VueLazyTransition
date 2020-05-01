@@ -1,21 +1,11 @@
+import { isDev } from '@/service/util/Helpers'
 import { LazyTransitionConfig } from '@/../types'
-import { handleElementInView, ObserverService } from '@/service/ObserverService'
 
 export class ObserverFactory {
-  private readonly observerService: ObserverService
   private observerMap: Map<String, IntersectionObserver> = new Map<String, IntersectionObserver>()
   private lastConfig: LazyTransitionConfig
 
-
-  private defaultCallback =
-    (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        handleElementInView(entry, this.config, this.observerService)
-      })
-    };
-
-  constructor (config: LazyTransitionConfig, observerService: ObserverService) {
-    this.observerService = observerService
+  constructor (config: LazyTransitionConfig) {
     this.lastConfig = config
   }
 
@@ -31,18 +21,33 @@ export class ObserverFactory {
     return this.observerMap.get(name)
   }
 
-  createObserver (name: string, config?: LazyTransitionConfig) {
+  createObserver (name: string, config?: LazyTransitionConfig, obsFn?: IntersectionObserverCallback) {
+    // save last Observer configuration
     if (config) this.lastConfig = config
+
+    // remove existing observer if it exists
     this.removeObserver(name)
-    const observer = new IntersectionObserver(this.defaultCallback, this.config.options)
-    this.observerMap.set(name, observer)
+    // if an observer function is provided, add a new observer wit that function
+    if (obsFn) this.observerMap.set(name, new IntersectionObserver(obsFn!, config?.options))
+
+    else if (isDev()) {
+      console.info('observer handler function is not defined')
+    }
   }
 
   removeObserver (name: string) {
     const storedObserver = this.observerMap.get(name)
     if (storedObserver) {
+      storedObserver.takeRecords().forEach(
+        entry => entry.target.removeAttribute('lazy-observing'))
       storedObserver.disconnect()
       this.observerMap.delete(name)
+    }
+  }
+
+  deleteAll() {
+    for (let key of this.observerMap.keys()) {
+      this.removeObserver(key.toString())
     }
   }
 }

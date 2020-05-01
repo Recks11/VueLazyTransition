@@ -1,9 +1,9 @@
 import _Vue, { PluginFunction } from 'vue'
-import { lazyAnimateDirective, lazyAnimateGroup } from '@/directive'
+import { lazyAnimateDirective, lazyAnimateGroup, lazyTransitionRoot } from '@/directive'
 import { InstallableComponent, LazyTransitionConfig } from '@/../types'
 import LazyTransitionComponent from '@/component/LazyTransition.vue'
 import { ObserverService } from '@/service/ObserverService'
-import { createObserverService } from '@/service/observer';
+import { createObserverService } from '@/service/observer/CreateObserver'
 
 interface InstallFunction extends PluginFunction<any> {
   installed?: boolean;
@@ -22,6 +22,7 @@ const install: InstallFunction = function installLazyAnimate(Vue: typeof _Vue, c
   // Add Directive
   lazyAnimateDirective(Vue)
   lazyAnimateGroup(Vue)
+  lazyTransitionRoot(Vue)
 
   //addMixin
   // addMixin(Vue)
