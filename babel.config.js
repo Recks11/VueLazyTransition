@@ -8,6 +8,11 @@ module.exports = {
       plugins: [
         '@babel/plugin-transform-runtime'
       ]
+    },
+    production: {
+      plugins: [
+        '@babel/plugin-proposal-class-properties'
+      ]
     }
   }
 };
