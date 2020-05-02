@@ -9,9 +9,6 @@ import babel from 'rollup-plugin-babel';
 import { terser } from 'rollup-plugin-terser';
 import minimist from 'minimist';
 
-const packageJson = JSON.parse(fs.readFileSync('./package.json').toString())
-const version = packageJson.version
-
 // Get browserslist config and remove ie from es build targets
 const esbrowserslist = fs.readFileSync('./.browserslistrc')
   .toString()
@@ -76,7 +73,7 @@ if (!argv.format || argv.format === 'es') {
     ...baseConfig,
     external,
     output: {
-      file: `dist/lazytransition@${version}.esm.js`,
+      file: `dist/lazy-transition.esm.js`,
       format: 'esm',
       exports: 'named',
     },
@@ -106,7 +103,7 @@ if (!argv.format || argv.format === 'cjs') {
     external,
     output: {
       compact: true,
-      file: `dist/lazytransition@${version}.ssr.js`,
+      file: `dist/lazy-transition.ssr.js`,
       format: 'cjs',
       name: 'LazyTransition',
       exports: 'named',
@@ -134,7 +131,7 @@ if (!argv.format || argv.format === 'iife') {
     external,
     output: {
       compact: true,
-      file: `dist/lazytransition@${version}.min.js`,
+      file: `dist/lazy-transition.min.js`,
       format: 'iife',
       name: 'LazyTransition',
       exports: 'named',
