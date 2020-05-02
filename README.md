@@ -38,6 +38,10 @@ or configure it manually
 import Vue from 'vue'
 import LazyTransition from 'vue-lazy-transition'
 
+// with default config
+Vue.use(LazyTransition)
+//OR
+// with manual config
 Vue.use(LazyTransition, {
   options: {
     root: null,
