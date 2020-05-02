@@ -141,6 +141,7 @@ export class ObserverService {
 
   startObserving (el: FunctionalVueElement,
                   binding: ObserverBinding): void {
+    if (binding.isVue !== false) binding.isVue = true
 
     // if a callback is specified, attach it
     // TODO(Test if it can be gotten in DOM. if it can, remove it lol)
@@ -150,12 +151,11 @@ export class ObserverService {
       el.setAttribute('ltr-id', fn)
       this._calMap.set(fn, { onView: binding.onView, onExit: binding.onExit })
     }
-
     // add transition name to element
-    if (binding.vueTransition) setTransition(el, binding.transition)
+    if (binding.isVue) setTransition(el, binding.transition)
 
     // attach events if a transition is specified and addEvents is true
-    if (binding.vueTransition && binding.transition) addTransitionEvents(el, 'enter')
+    if (binding.isVue && binding.transition) addTransitionEvents(el, 'enter')
 
     // set the observer key
     el.observerKey = this.observerKey

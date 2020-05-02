@@ -6,7 +6,7 @@ import { FunctionalVueElement, ObserverBinding } from '@/../types'
 function addBindingProperties (el: FunctionalVueElement, binding: DirectiveBinding) {
   const obBind: ObserverBinding = {
     transition: Object.create(null),
-    vueTransition: true
+    isVue: true
   }
 
   const bindVal = binding.value
@@ -19,7 +19,7 @@ function addBindingProperties (el: FunctionalVueElement, binding: DirectiveBindi
   }
 
   if (binding.modifiers.manual) {
-    obBind.vueTransition = false
+    obBind.isVue = false
   }
 
   el.binding = obBind

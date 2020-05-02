@@ -54,7 +54,7 @@ export declare class ObserverService {
 
 export type ObserverBinding = {
   transition?: string;
-  vueTransition?: boolean;
+  isVue?: boolean;
   onView?: Function;
   onExit?: Function;
 }

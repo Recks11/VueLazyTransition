@@ -43,7 +43,7 @@ export default Vue.extend({
 
       this.$lazyObserver.observeWith('func', secondNode, {
         transition: 'side-fade-right',
-        vueTransition: true,
+        isVue: true,
         onView: () => {
           this.cloneChildNode(secondNode, newNode)
         }
@@ -57,7 +57,7 @@ export default Vue.extend({
 
       this.$lazyObserver.observeWith('func', node, {
         transition: 'side-fade-right',
-        vueTransition: true,
+        isVue: true,
         onView: () => {
           this.cloneChildNode(node, parentNode)
         }
@@ -69,7 +69,7 @@ export default Vue.extend({
 
     this.$lazyObserver.observeWith('func', el, {
       transition: 'side-fade-left',
-      vueTransition: true,
+      isVue: true,
       onView: this.showThings
     })
   },
