@@ -8,8 +8,13 @@ This is a minimal Vue plugin to enable transitions or animations on scroll using
 - [Usage](#Usage)
     - [Component Syntax](#Component)
     - [Directive Syntax](#Directive)
+        - [`v-lazytransition`](#v-lazytransition)
+        - [`v-lazytransition-group`](#v-lazytransition)
+        - [`v-lazytransition-root`](#v-lazytransition)
 - [Specifying CSS Transitions](#Specifying Transitions/Animations)
 - [Global Variable `$lazyObserver`](#Using the Global Variable)
+- [Adding an Observer `NEW`](#Adding observer)
+- [Callbacks `NEW`](#Using Callbacks)
 
 ## Install
 npm
@@ -74,12 +79,13 @@ For Example:
 </lazy-transition>
 ```
 
-### <a id="Directive"></a> Directive
+## <a id="Directive"></a> Directive
 There are two lazy transition directives: 
 - `v-lazytransition`
 - `v-lazytransition-group`
 - `v-lazytransition-root`
 
+### v-lazytransition
 When you want to apply a vue transition to a single component or HTMLElement, you simply add the `v-lazytransition` directive
 and the name of the transition you created for the element.
 ```vue
@@ -87,13 +93,16 @@ and the name of the transition you created for the element.
    <your-component v-lazytransition="'transition-name'"></your-component>
 </template>
 ```
+you can use the object syntax to specify more functionality such as callbacks to be executed when the element comes into view,
+or if the transition is a vue trasition or a custom class you want to add to the element. or both :) discussed [here](#Using Callbacks)
 
+### v-lazytransition-group
 The `v-lazytransition-group` should be used when you want to apply transitions on all children nodes of a parent node.
 
 for example 
 ```vue
 <template>
-    <div class="parent" v-lazytransition-group="'transition-name'">
+    <div class="parent" v-lazytransition-group="'custom-transition'">
         <div class="child"> ... </div>
         <div class="child"> ... </div>
         <div class="child"> ... </div>
@@ -106,6 +115,47 @@ applying the `v-lazytransition-group` directive here will apply the `custom-tran
 will perform the transition when each element enters the viewport.
 
 using directives will bring better support for already made projects, as it doesn't add an extra component
+
+### v-lazytransition-root
+the `v-lazytransition-root` is used to change the root of the observer or create an observer with the bound element as the root
+. it takes an object containing the name of the observer you wish to create.
+if you don\'t specify an object, it replaces the default observer root with itself.
+
+```vue
+
+<template>
+    <div id="#app" v-lazytransition-root="{observer: 'foo'}">
+        <div class="child"> ... </div>
+        <div class="child"> ... </div>
+        <div class="child"> ... </div>
+        <div class="child"> ... </div>
+        <div ref="bar" > ... </div>
+        <div class="child" v-lazytransition="{transition: 'bounce-out'}"> ... </div>
+    </div>
+</template>
+```
+this will create the observer 'foo' with the div with id #app as the root 
+(of course the element has to be scrollable). you can then use that observer with the 
+`$lazyObserver.observeWith()` method.
+
+```ts
+export default Vue.extend({
+  mounted () {
+    const element = this.$refs.bar
+    this.$lazyObserver.observeWith('foo', element, {
+      transition: 'side-fade',
+      isVue: true,
+      onView: () => {
+        // do something
+      }
+    })  
+  }
+})
+```
+
+@TODO -  Document
+if you want all children of that element bound with the element 
+
 
 ## Specifying Transitions/Animations
 This package uses the `<transition>` vue component under the hood for the component syntax, and the directive uses 
@@ -151,11 +201,40 @@ or as a directive, provide the name
 </template>
 ```
 
-### Using the Global Variable
+## Using the Global Variable
 the `$lazyObserver` instance variable gives access to the internal observer instance. you can use this to manually 
 observe elements via `refs` or to manually dispose the observer.
 
-you can also use the `$lazyObserver` to manually observe an element in the DOM.
+when using the global variable, you can specify a callback to be executed when an element is in view
+
+## Using Callbacks
+You can observe an element and provide a callback to be executed when it is in view using the global variable or the 
+directive syntax
+
+### Directives
+the `v-lazytransition` directive can take an object of the following syntax
+
+```ts
+type ObserverBinding = {
+  transition?: string
+  isVue?: boolean
+  onView?: Function
+}
+```
+All fields are optional, you can specify one or the other.
+- <strong>transition</strong>: the transition to be applied when the element is in view. if unset, the observer ignores this property and no style change happens.
+- <strong>isVue</strong>: if true, then the transition will be treated as a vue transition, if false, it will add the transition string as a css class to the element when the element is in view. if unset, it defaults to true.
+- <strong>onView</strong>: the callback to be executed when an element comes into view. 
+
+Example
+```vue
+// this calls the setStatus method when <your-component/> enters the observer root
+<template>
+    <div class="main">
+        <your-component v-lazytransition="{transition: 'side-fade-left', onView: this.setStatus}" />
+    </div>
+</template>
+```
 
 
 ## SETTING UP FOR DEVELOPMENT
