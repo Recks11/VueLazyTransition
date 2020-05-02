@@ -11,10 +11,10 @@ This is a minimal Vue plugin to enable transitions or animations on scroll using
         - [`v-lazytransition`](#v-lazytransition)
         - [`v-lazytransition-group`](#v-lazytransition)
         - [`v-lazytransition-root`](#v-lazytransition)
-- [Specifying CSS Transitions](#Specifying Transitions/Animations)
-- [Global Variable `$lazyObserver`](#Using the Global Variable)
-- [Adding an Observer `NEW`](#Adding observer)
-- [Callbacks `NEW`](#Using Callbacks)
+- [Specifying CSS Transitions](#transitions-animations)
+- [Global Variable `$lazyObserver`](#global-vars)
+- [Adding an Observer `NEW`](#add-observer)
+- [Callbacks `NEW`](#callbacks)
 
 ## Install
 npm
@@ -161,7 +161,7 @@ export default Vue.extend({
 if you want all children of that element bound with the element 
 
 
-## Specifying Transitions/Animations
+## <a id="transitions-animations"></a>Specifying Transitions/Animations
 This package uses the `<transition>` vue component under the hood for the component syntax, and the directive uses 
 the same syntax for its transitions. Therefore, to create transitions you should follow the guide provided in 
 [the official docs](https://vuejs.org/v2/guide/transitions.html#Transitioning-Single-Elements-Components).
@@ -205,13 +205,13 @@ or as a directive, provide the name
 </template>
 ```
 
-## Using the Global Variable
+## <a id="global-vars"></a>Using the Global Variable
 the `$lazyObserver` instance variable gives access to the internal observer instance. you can use this to manually 
 observe elements via `refs` or to manually dispose the observer.
 
 when using the global variable, you can specify a callback to be executed when an element is in view
 
-## Using Callbacks
+##  <a id="callbacks"></a> Using Callbacks
 You can observe an element and provide a callback to be executed when it is in view using the global variable or the 
 directive syntax
 
@@ -241,7 +241,7 @@ Example
 ```
 
 
-## SETTING UP FOR DEVELOPMENT
+##  <a id="dev"></a> SETTING UP FOR DEVELOPMENT
 
 clone the repository and run the dev server
 ```zsh
