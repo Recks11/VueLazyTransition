@@ -1,8 +1,7 @@
 <template>
-  <section class="animated mb-5" id="inner"
+  <section class="component animated mb-5" id="inner"
            v-lazytransition="{transition: this.transition, onView: this.changeText}">
-    Dummy component: <slot/>
-    <p> {{ this.text }} </p>
+    Dummy component: {{ this.text }}
   </section>
 </template>
 <script lang="ts">
@@ -19,13 +18,13 @@ export default Vue.extend({
   },
   data () {
     return {
-      text: 'Data property in dummy component'
+      text: 'text'
     }
   },
   methods: {
     changeText () {
       setTimeout(() => {
-        this.text = this.text + ' that changed 2 seconds after it got here'
+        this.text = this.text + ' updated 2 seconds after it got here'
       }, 2000)
     }
   }
