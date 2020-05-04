@@ -43,38 +43,47 @@ export declare class ObserverService {
 
   changeObserver (name: string, root?: Element): void
 
-  startObserving (el: FunctionalVueElement | VueElement | Element, binding: ObserverBinding): void
+  startObserving (el: FunctionalElement | VueElement | Element, binding: ObserverBinding): void
 
-  observeWith (observer: string, el: FunctionalVueElement | VueElement | Element, binding: ObserverBinding): void
+  observeWith (observer: string, el: FunctionalElement | VueElement | Element, binding: ObserverBinding): void
 
-  stopObserving (el: FunctionalVueElement | VueElement | Element): void
+  stopObserving (el: FunctionalElement | VueElement | Element): void
 
   disposeObserver (): void
+
+  killAll(): void
 }
 
 export type ObserverBinding = {
   transition?: string;
   isVue?: boolean;
-  onView?: Function;
-  onExit?: Function;
+  onView?: (el: BoundElement) => void;
+  afterTransition?: (el: BoundElement) => void;
+  onExit?: (el: BoundElement) => void;
 }
 
+// interface to expose vue instance to components
 export interface VueElement extends HTMLElement {
   __vue__: Vue
-  isFromDirective: boolean
+}
+
+export interface FunctionalElement extends VueElement {
+  trId: string
+  transitionStage: number
+  observerKey: string
   binding: ObserverBinding
 }
 
-export interface FunctionalVueElement extends VueElement {
-  observerKey: string
-  callback?: boolean
-  // exitCallback?: Function // To be used later
-  transition?: string
-  // customTransition?: string // to be used later
+// Function tuple for Function Map
+export interface BindFunctions {
+  onView?: (el: BoundElement) => void;
+  afterTransition?: (el: BoundElement) => void;
+  onExit?: (el: BoundElement) => void;
 }
 
-export interface FunTupule {
-  onView?: Function
-  onExit?: Function
+// exposed interface which excludes __vue__ suggestion
+export interface BoundElement extends HTMLElement{
+  observerKey: string
+  binding: ObserverBinding
 }
 

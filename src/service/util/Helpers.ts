@@ -1,4 +1,4 @@
-import { FunctionalVueElement, VueElement } from '@/../types';
+import { FunctionalElement, VueElement } from '@/../types'
 
 export function getVueInstance (el: Element) {
   const elem = el as VueElement
@@ -9,9 +9,10 @@ export function isHtmlElement (el: Element) {
   return el instanceof HTMLElement
 }
 
-export function hasCallback (el: FunctionalVueElement) {
-  const elem = el as FunctionalVueElement
-  return elem.callback && el.getAttribute('ltr-id') !== undefined
+export function hasCallback (el: FunctionalElement) {
+  const elem = el as FunctionalElement
+  const binding = elem.binding
+  return (binding && (binding.onView || binding.onExit || binding.afterTransition)) || el.getAttribute('ltr-id') !== undefined
 }
 
 export function isVueComponent (el: Element) {
@@ -44,20 +45,11 @@ export const isDev = () => {
   return process.env.NODE_ENV !== 'production'
 }
 
-export function setTransition(el: FunctionalVueElement, transition?: string) {
-  let tra: string = Object.create(null)
-  if (el.isFromDirective) {
-    const bindVal = el.binding
-    if (typeof bindVal === 'object' && bindVal.transition) {
-      tra = bindVal.transition
-    }
-  } else if (transition) tra = transition
-  el.transition = tra
-}
+
 export function makeStr(length: number) {
-  let result = '';
-    const characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    const charactersLength = characters.length;
+  let result = ''
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+    const charactersLength = characters.length
     for ( let i = 0; i < length; i++ ) {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
