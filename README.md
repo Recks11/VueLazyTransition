@@ -12,9 +12,9 @@ This is a minimal Vue plugin to enable transitions or animations on scroll using
         - [`v-lazytransition-group`](#v-lazytransition)
         - [`v-lazytransition-root`](#v-lazytransition)
 - [Specifying CSS Transitions](#transitions-animations)
-- [Global Variable `$lazyObserver`](#global-vars)
-- [Adding an Observer `NEW`](#add-observer)
 - [Callbacks `NEW`](#callbacks)
+- [Adding an Observer `NEW`](#add-obs)
+- [Global Variable `$lazyObserver`](#global-vars)
 
 ## Install
 npm
@@ -142,25 +142,6 @@ this will create the observer 'foo' with the div with id #app as the root
 (of course the element has to be scrollable). you can then use that observer with the 
 `$lazyObserver.observeWith()` method.
 
-```ts
-export default Vue.extend({
-  mounted () {
-    const element = this.$refs.bar
-    this.$lazyObserver.observeWith('foo', element, {
-      transition: 'side-fade',
-      isVue: true,
-      onView: () => {
-        // do something
-      }
-    })  
-  }
-})
-```
-
-@TODO -  Document
-if you want all children of that element bound with the element 
-
-
 ## <a id="transitions-animations"></a>Specifying Transitions/Animations
 This package uses the `<transition>` vue component under the hood for the component syntax, and the directive uses 
 the same syntax for its transitions. Therefore, to create transitions you should follow the guide provided in 
@@ -205,30 +186,44 @@ or as a directive, provide the name
 </template>
 ```
 
-## <a id="global-vars"></a>Using the Global Variable
-the `$lazyObserver` instance variable gives access to the internal observer instance. you can use this to manually 
-observe elements via `refs` or to manually dispose the observer.
-
-when using the global variable, you can specify a callback to be executed when an element is in view
-
 ##  <a id="callbacks"></a> Using Callbacks
 You can observe an element and provide a callback to be executed when it is in view using the global variable or the 
 directive syntax
 
 ### Directives
-the `v-lazytransition` directive can take an object of the following syntax
+the `v-lazytransition` directive also takes an `ObserverBinding` object of the following syntax
 
 ```ts
 type ObserverBinding = {
-  transition?: string
-  isVue?: boolean
-  onView?: Function
+  transition?: string;
+  isVue?: boolean;
+  onView?: (el: BoundElement) => void;
+  afterTransition?: (el: BoundElement) => void;
 }
 ```
 All fields are optional, you can specify one or the other.
 - <strong>transition</strong>: the transition to be applied when the element is in view. if unset, the observer ignores this property and no style change happens.
-- <strong>isVue</strong>: if true, then the transition will be treated as a vue transition, if false, it will add the transition string as a css class to the element when the element is in view. if unset, it defaults to true.
-- <strong>onView</strong>: the callback to be executed when an element comes into view. 
+- <strong>isVue</strong>: if true, then the transition will be treated as a vue transition, if false, it will add the transition string as a css class to the element when the element is in view. if unset, it defaults to true, then the transition will be treated as a vue transition.
+- <strong>onView</strong>: the callback to be executed when an element comes into view
+- <strong>afterTransition</strong>: the callback to be executed after the transition completes
+
+### Global Variable
+the global variable can also be used with the `ObserverBinding`
+
+```ts
+export default Vue.extend({
+  mounted () {
+    const element = this.$refs.bar
+    this.$lazyObserver.startObserving( element, {
+      transition: 'side-fade',
+      onView: (el: BoundElement) => {
+        // do something
+      },
+      afterTransition: (el) => el.classList.append('bounce-out')
+    })  
+  }
+})
+```
 
 Example
 ```vue
@@ -240,6 +235,40 @@ Example
 </template>
 ```
 
+## <a id="add-obs"></a> Adding an Observer
+An observer can be added using the  `$lazyObserver.createObserver()` method. this takes three parameters
+- `name`: The name/identifier of the observer
+- `root`: the root element for the observer
+- `callback`: the callback to be executed when an element observed by this observer intersects with the root element.
+
+## <a id="global-vars"></a>The Global Variable
+the `$lazyObserver` instance variable gives access to the internal observer instance. you can use this to manually 
+observe elements via `refs` or to manually dispose the observer.
+
+when using the global variable, you can specify a callback to be executed when an element is in view or after a transition is finished.
+The global variable provides some useful methods as shown below
+
+```ts
+export declare class $lazyObserver {
+  get observer (): IntersectionObserver
+
+  get observerKey (): string
+
+  createObserver (name: string, root?: BoundElement): void
+
+  changeObserver (name: string, root?: BoundElement): void
+
+  startObserving (el: BoundElement, binding: ObserverBinding): void
+
+  observeWith (observer: string, el: BoundElement, binding: ObserverBinding): void
+
+  stopObserving (el: BoundElement): void
+
+  disposeObserver (): void
+  
+  killAll(): void
+}
+```
 
 ##  <a id="dev"></a> SETTING UP FOR DEVELOPMENT
 

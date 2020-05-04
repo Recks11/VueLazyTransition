@@ -1,6 +1,6 @@
 {
   "name": "vue-lazy-transition",
-  "version": "0.5.1",
+  "version": "0.5.3",
   "private": false,
   "description": "vue plugin to apply custom transitions or animations when an element enters the viewport",
   "author": "Ijiekhuamen Rex",
