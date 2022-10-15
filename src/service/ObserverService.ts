@@ -54,6 +54,8 @@ export function handleElementInView (entry: IntersectionObserverEntry,
       } finally {
         // Stop observing after object is in view and transition is done
         obSer.stopObserving(elm)
+        if (obSer.fnMap.has(elm.trId))
+          obSer.fnMap.delete(elm.trId)
       }
       // const rootBounds = entry.rootBounds
       // if (rootBounds) {
